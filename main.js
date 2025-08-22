@@ -52,7 +52,7 @@ i18next.init({
   resources: {
     ru: { translation: { nav1: "Главная", nav2: "Рейтинг", nav3: "Критерии", part1: "Рейтинг эмитентов в", part2: "сфере рынка ценных бумаг", emitent: "Общее количество эмитентов:", AO: "AO: {{AO}}; OOO: {{OOO}}", year: "Выберите год", q1: "1 квартал", q2: "2 квартал", q3: "3 квартал", q4: "4 квартал"  }},
     en: { translation: { nav1: "Home", nav2: "Rating", nav3: "Criteria", part1: "Issuer rating in", part2: "the securities market", emitent: "Total number of issuers:", AO: "JSC: {{AO}}; LLC: {{OOO}}", year: "Choose a year", q1: "1 quarter", q2: "2 quarters", q3: "3 quarters", q4: "4 quarters" }},
-    uz: { translation: { nav1: "Bosh sahifa", nav2: "Reyting", nav3: "Mezon", part1: "Emitentlar reytingi", part2: "qimmatli qog'ozlar bozorida", emitent: "Emitentlarning umumiy soni:", AO: "AJ: {{AO}}; MChJ: {{OOO}}", year: "Yilni tanlang", q1: "1 chorak", q2: "2 chorak", q3: "3 chorak", q4: "4 chorak" }}
+    uz: { translation: { nav1: "Bosh sahifa", nav2: "Reyting", nav3: "Mezon", part1: "Emitentlar reytingi", part2: "qimmatli qog'ozlar bozorida", emitent: "Emitentlar umumiy soni:", AO: "AJ: {{AO}}; MChJ: {{OOO}}", year: "Yilni tanlang", q1: "1 chorak", q2: "2 chorak", q3: "3 chorak", q4: "4 chorak" }}
   }
 }, function(err, t) {
    
@@ -77,8 +77,6 @@ document.querySelector(".language-dropdown__menu").addEventListener("click", e =
   const li = e.target.closest("li");
   if (li && li.dataset.lang) changeLang(li.dataset.lang);
 });
-
-
 
 /* Typewriter */
 function startTypewriter() {
