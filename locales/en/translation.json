@@ -1,0 +1,14 @@
+{
+  "nav1": "Home",
+  "nav2": "Rating",
+  "nav3": "Criteria",
+  "part1": "Issuer rating in",
+  "part2": "the securities market",
+  "emitent": "Total number of issuers:",
+  "AO": "JSC: {{AO}}; LLC: {{OOO}}",
+  "year": "Choose a year",
+   "q1": "1 quarter",
+    "q2": "2 quarters",
+     "q3": "3 quarters",
+      "q4": "4 quarters"
+}
