@@ -2212,8 +2212,18 @@ const rect = yearSelector.getBoundingClientRect();
 const parentRect = yearSelector.parentElement.getBoundingClientRect();
 
 yearDropdown.style.position = "absolute";
-yearDropdown.style.top = (rect.bottom - parentRect.top) / parentRect.height * 100 + "%";
-yearDropdown.style.left = (rect.left - parentRect.left ) / parentRect.width * 100 + "%";
+const parent = yearSelector.parentElement;
+// ensure parent is a positioned ancestor
+if (getComputedStyle(parent).position === "static") parent.style.position = "relative";
+
+// compute pixel offsets: button rect minus parent rect, add parent scroll (if any)
+const leftPx = rect.left - parentRect.left + parent.scrollLeft;
+const topPx  = rect.bottom - parentRect.top + parent.scrollTop;
+
+// anchor dropdown directly beneath the button (pixel-perfect)
+yearDropdown.style.left = Math.round(leftPx) + "px";
+yearDropdown.style.top  = Math.round(topPx)  + "px";
+
 
 yearSelector.parentElement.style.position = "relative";
 yearDropdown.style.background = "#fff";
@@ -2222,7 +2232,6 @@ yearDropdown.style.listStyle = "none";
 yearDropdown.style.padding = "0";
 yearDropdown.style.display = "none";
 yearDropdown.style.borderRadius = "1rem";
-yearDropdown.style.top = "100%";
 
 const style = document.createElement("style");
 style.innerHTML = `
