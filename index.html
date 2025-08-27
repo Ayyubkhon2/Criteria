@@ -8,11 +8,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet"/> 
+      <link rel="stylesheet" href="home.css" />
     <link rel="stylesheet" href="styles.css" />
+   
   </head>
   <body>
+    <!-- Blobs -->
+    <div class="floating-blobs" aria-hidden="true">
+      <div class="blob blob--one"></div>
+      <div class="blob blob--two"></div>
+      <div class="blob blob--three"></div>
+    </div>
+
     <div class="layer-blur">
       <!-- Header -->
       <header class="header">
@@ -20,7 +28,6 @@
           <div class="header__left">
             <div class="header__logo logo">
               <img src="assets/logo-img.png" alt="" class="logo__img" />
-
               <div class="logo__text-wrap">
                 <p class="logo__bold">NAPP</p>
                 <p class="logo__subtitle">NATIONAL AGENCY</p>
@@ -34,9 +41,9 @@
                   <a href="index.html" data-i18n="nav1" id="home-link"></a>
                 </li>
                 <li class="nav__item">
-                  <a href="#" data-i18n="nav2"></a>
+                  <a href="rating.html" data-i18n="nav2"></a>
                 </li>
-                <li class="nav__item"><a href="#" data-i18n="nav3"></a></li>
+                <li class="nav__item"><a href="criteria.html" data-i18n="nav3"></a></li>
 
                 <div class="nav__underline"></div>
               </ul>
@@ -91,7 +98,6 @@
               <a href="#" data-i18n="nav2"></a>
               <a href="#" data-i18n="nav3"></a>
             </div>
-
           </div>
         </div>
       </header>
@@ -186,7 +192,6 @@
       <section class="criteria">
         <p class="criteria__title" data-i18n="rating">Что оцениваем</p>
         <div class="criteria__group">
-
           <div class="criteria__item reveal reveal-bottom">
             <div class="criteria__icon">
               <img
@@ -387,6 +392,7 @@
       </footer>
     </div>
     <script src="https://unpkg.com/i18next@23.7.6/dist/umd/i18next.min.js"></script>
-    <script src="main.js"></script>
+  <script src="main.js"></script> 
+  <script src="home.js"></script>
   </body>
 </html>
