@@ -19,6 +19,93 @@ navItems.forEach((item) => {
   });
 });
 
+
+/* Reveal animation */
+
+// Select all elements with .reveal
+const reveals = document.querySelectorAll('.reveal');
+
+// Set up an observer
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');   // trigger animation
+      observer.unobserve(entry.target);        // stop observing once visible
+    }
+  });
+}, {
+  threshold: 0.1   // trigger when 10% of the element is visible
+});
+
+// Observe each element
+reveals.forEach(el => observer.observe(el));
+
+
+/* Magnetic button*/
+const buttons = document.querySelectorAll('.button');
+
+buttons.forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+  });
+
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = 'translate(0,0)';
+  });
+});
+
+
+/* Ripple animation*/
+const quarterBtns = document.querySelectorAll('.chart__quarter-btn');
+
+quarterBtns.forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const circle = document.createElement('span');
+    circle.classList.add('ripple');
+
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    circle.style.width = circle.style.height = `${size}px`;
+
+    circle.style.left = `${e.clientX - rect.left - size / 2}px`;
+    circle.style.top = `${e.clientY - rect.top - size / 2}px`;
+
+    btn.appendChild(circle);
+
+    setTimeout(() => circle.remove(), 600); // cleanup
+  });
+});
+
+
+/* Chart swipe*/
+const chart = document.querySelector('.chart');
+let startX = 0;
+
+chart.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+
+chart.addEventListener('touchend', e => {
+  let endX = e.changedTouches[0].clientX;
+  let diffX = endX - startX;
+
+  if (Math.abs(diffX) > 50) { // threshold
+    if (diffX > 0) {
+      console.log('Swipe right → previous quarter');
+      // triggerPrevQuarter();
+    } else {
+      console.log('Swipe left → next quarter');
+      // triggerNextQuarter();
+    }
+  }
+});
+
+
+
 /* Language dropdown */
 const languageDropdown = document.querySelector(".language-dropdown");
 const languageBtn = languageDropdown.querySelector(".language-dropdown__btn");
@@ -2164,17 +2251,39 @@ function updateChart(year, quarter) {
     bars.forEach((bar, i) => {
       if (groupData[i]) {
         const d = groupData[i];
-        bar.style.width = d.width + "%";
+
+        // Hide first to allow re-animation
+        bar.style.display = "none";
+        bar.style.width = "0";
+
+        // Apply styles
         bar.style.background = d.bg;
         bar.style.borderRight = `${d.borderWidth}px solid ${d.border}`;
         bar.dataset.tooltip = d.tooltip;
-        bar.style.display = "block";
+
+        // Force reflow, then animate
+        setTimeout(() => {
+          bar.style.display = "block";
+          requestAnimationFrame(() => {
+            bar.style.width = d.width + "%";
+          });
+        }, 50);
+
       } else {
         bar.style.display = "none";
       }
     });
   });
 }
+
+// ✅ Trigger animation once when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  const defaultYear = Object.keys(chartData)[0];
+  const defaultQuarter = Object.keys(chartData[defaultYear])[0];
+  updateChart(defaultYear, defaultQuarter);
+});
+
+
 
 /* Quarter buttons click */
 quarterButtons.forEach((btn) => {
@@ -2192,18 +2301,20 @@ quarterButtons.forEach((btn) => {
 chartBars.forEach((bar) => {
   bar.addEventListener("mouseenter", () => {
     chartTooltip.innerText = bar.dataset.tooltip;
-    chartTooltip.style.display = "block";
+    chartTooltip.classList.add("visible");
     chartTooltip.style.background = getComputedStyle(bar).backgroundColor;
   });
+
   bar.addEventListener("mousemove", (e) => {
     chartTooltip.style.left = e.pageX + 15 + "px";
     chartTooltip.style.top = e.pageY - 10 + "px";
   });
-  bar.addEventListener(
-    "mouseleave",
-    () => (chartTooltip.style.display = "none")
-  );
+
+  bar.addEventListener("mouseleave", () => {
+    chartTooltip.classList.remove("visible");
+  });
 });
+
 
 /* Year selector dropdown logic */
 const yearDropdown = document.createElement("ul");
