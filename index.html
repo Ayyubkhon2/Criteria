@@ -8,10 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"/> 
-      <link rel="stylesheet" href="home.css" />
-    <link rel="stylesheet" href="styles.css" />
-   
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <!-- Blobs -->
@@ -38,12 +38,14 @@
             <nav class="header__nav nav">
               <ul class="nav__list">
                 <li class="nav__item nav__item--active">
-                  <a href="index.html" data-i18n="nav1" id="home-link"></a>
+                  <a href="index.html"><span data-i18n="nav1">Главная</span></a>
                 </li>
                 <li class="nav__item">
-                  <a href="rating.html" data-i18n="nav2"></a>
+                  <a href="rating.html"><span data-i18n="nav2">Рейтинг</span></a>
                 </li>
-                <li class="nav__item"><a href="criteria.html" data-i18n="nav3"></a></li>
+                <li class="nav__item">
+                  <a href="criteria.html"><span data-i18n="nav3">Критерии</span></a>
+                </li>
 
                 <div class="nav__underline"></div>
               </ul>
@@ -83,7 +85,7 @@
               </ul>
             </div>
 
-            <div class="header__login login button">Войти</div>
+            <div class="header__login login magnetic-button">Войти</div>
 
             <!-- Burger -->
             <div class="burger" id="burger">
@@ -94,9 +96,9 @@
 
             <!-- Dropdown -->
             <div class="dropdown" id="dropdown">
-              <a href="#" data-i18n="nav1"></a>
-              <a href="#" data-i18n="nav2"></a>
-              <a href="#" data-i18n="nav3"></a>
+              <a href="index.html" data-i18n="nav1"></a>
+              <a href="rating.html" data-i18n="nav2"></a>
+              <a href="criteria.html" data-i18n="nav3"></a>
             </div>
           </div>
         </div>
@@ -123,7 +125,7 @@
 
           <div class="chart__header-btn">
             <div class="chart__header-text" data-i18n="year">Выберите год</div>
-            <div class="chart__header-year-selector button">2025</div>
+            <div class="chart__header-year-selector magnetic-button">2025</div>
           </div>
         </div>
 
@@ -392,7 +394,7 @@
       </footer>
     </div>
     <script src="https://unpkg.com/i18next@23.7.6/dist/umd/i18next.min.js"></script>
-  <script src="main.js"></script> 
-  <script src="home.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
   </body>
 </html>
