@@ -67,15 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Color ranges
   function getColor(value) {
     if (value >= 99) return "#009a44";
-    if (value > 89) return "#91bd00";
-    if (value > 79) return "#a5c91f";
-    if (value > 69) return "#d9b600";
-    if (value > 59) return "#d9ce04";
-    if (value > 49) return "#efe31e";
-    if (value > 39) return "#d96400";
-    if (value > 29) return "#d99c00";
-    if (value > 19) return "#f0ae13";
-    return "#D92804"; // 10 or less
+    if (value >= 89) return "#91bd00";
+    if (value >= 79) return "#a5c91f";
+    if (value >= 69) return "#d9b600";
+    if (value >= 59) return "#d9ce04";
+    if (value >= 49) return "#efe31e";
+    if (value >= 39) return "#d96400";
+    if (value >= 29) return "#d99c00";
+    if (value >= 9) return "#f0ae13";
+    return "#D92804"; 
   }
 
   provinces.forEach(province => {
@@ -93,10 +93,26 @@ document.addEventListener("DOMContentLoaded", () => {
       tooltip.style.display = "block";
     });
 
-    province.addEventListener("mousemove", e => {
-      tooltip.style.left = e.pageX + 15 + "px";
-      tooltip.style.top = e.pageY + 15 + "px";
-    });
+province.addEventListener("mousemove", e => {
+  const tooltipWidth = tooltip.offsetWidth;
+  const tooltipHeight = tooltip.offsetHeight;
+
+  let left = e.pageX + 15;
+  let top  = e.pageY + 15;
+
+  // Prevent going beyond right edge
+  if (left + tooltipWidth > window.innerWidth) {
+    left = e.pageX - tooltipWidth - 15; // flip to the left
+  }
+
+  // Prevent going beyond bottom edge (optional)
+  if (top + tooltipHeight > window.innerHeight) {
+    top = e.pageY - tooltipHeight - 15; // move above cursor
+  }
+
+  tooltip.style.left = left + "px";
+  tooltip.style.top  = top  + "px";
+});
 
     province.addEventListener("mouseleave", () => {
       if (!province.classList.contains("active")) {
@@ -141,6 +157,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+// Counter
+    const counters = document.querySelectorAll(".stat__value");
+    const speed = 50; // lower is faster
+
+    counters.forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute("data-target");
+        const current = +counter.innerText;
+
+        // how much to increment
+        const increment = Math.ceil(target / speed);
+
+        if (current < target) {
+          counter.innerText = current + increment;
+          requestAnimationFrame(updateCount); 
+        } else {
+          counter.innerText = target; 
+        }
+      };
+
+      updateCount();
+ });
 
 
 
