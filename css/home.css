@@ -2,7 +2,7 @@
 
 
 body {
-  background: url("/assets/home-bg.jpg") no-repeat center center fixed;
+  background: url("../assets/home-bg.jpg") no-repeat center center fixed;
   font-family: mulish;
   color: #ffffff;
   width: 100%;
