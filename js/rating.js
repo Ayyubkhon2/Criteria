@@ -42,53 +42,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const cards = Array.from(track.querySelectorAll('.carousel__card'));
   if (cards.length === 0) return;
 
-  const step = 300; 
+  const step = 300;   // card + gap
+  const groupSize = 3; // ✅ move 3 cards at once
   let index = 0;
-
-  function measureStart() {
-  return 0;
-}
-
-  let baseOffset = measureStart();
-
+  let baseOffset = 0;
 
   function applyTransform() {
-    track.style.transform = `translateX(${baseOffset - index * step}px)`;
+    track.style.transform = `translateX(${baseOffset - index * step * groupSize}px)`;
   }
 
- function goRight() {
-  const containerWidth = track.parentElement.clientWidth;
-  const visibleCount = Math.floor(containerWidth / step);
-  const maxIndex = cards.length - visibleCount;
+  function goRight() {
+    const containerWidth = track.parentElement.clientWidth;
+    const visibleCount = Math.floor(containerWidth / step);
+    const maxIndex = Math.ceil((cards.length - visibleCount) / groupSize);
 
-  if (index < maxIndex) {
-    index++;
+    if (index < maxIndex) index++;
+    else index = 0; // ✅ loop back when reaching end
     applyTransform();
+    resetAutoplay();
   }
-}
 
   function goLeft() {
-    if (index > 0) {
-      index--;
-      applyTransform();
-    }
+    if (index > 0) index--;
+    else index = 0;
+    applyTransform();
+    resetAutoplay();
   }
 
-  track.style.transition = 'transform 400ms ease';
+  // smooth transition
+  track.style.transition = 'transform 600ms ease-out';
+
+  // autoplay logic
+  let autoplayTimer;
+  function resetAutoplay() {
+    clearTimeout(autoplayTimer);
+    autoplayTimer = setTimeout(goRight, 10000); // ✅ 30s
+  }
 
   btnRight.addEventListener('click', goRight);
   btnLeft.addEventListener('click', goLeft);
 
-  window.addEventListener('resize', () => {
-    baseOffset = measureStart();
-    applyTransform();
-  });
-
   window.addEventListener('load', () => {
-    baseOffset = measureStart();
     applyTransform();
+    resetAutoplay(); // start idle timer
   });
 })();
+
 
 
 

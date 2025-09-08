@@ -14,7 +14,7 @@ input,
 textarea,
 button, 
 select {
-  font-family: inherit;
+  font-family: inherit; 
 }
 
 @mixin transition($duration: 0.3s, $property: all, $timing: ease-out) {
