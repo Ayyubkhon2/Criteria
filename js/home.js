@@ -1,38 +1,37 @@
-
 /* Ripple effect + click logic + swipe */
-document.addEventListener('DOMContentLoaded', () => {
-  const chart = document.querySelector('.chart');
-  const quarterBtns = Array.from(document.querySelectorAll('.chart__quarter-btn'));
-  const yearSelectorEl = document.querySelector('.chart__header-year-selector');
+document.addEventListener("DOMContentLoaded", () => {
+  const chart = document.querySelector(".chart");
+  const quarterBtns = Array.from(
+    document.querySelectorAll(".chart__quarter-btn")
+  );
+  const yearSelectorEl = document.querySelector(".chart__header-year-selector");
 
-  if (!chart || quarterBtns.length === 0) return; // safety
+  if (!chart || quarterBtns.length === 0) return;
 
-  // Use global currentYear/currentQuarter if present; fallback if not
-  if (typeof window.currentYear === 'undefined') window.currentYear = (new Date()).getFullYear();
-  if (typeof window.currentQuarter === 'undefined') window.currentQuarter = 1;
+  if (typeof window.currentYear === "undefined")
+    window.currentYear = new Date().getFullYear();
+  if (typeof window.currentQuarter === "undefined") window.currentQuarter = 1;
 
-  // Helper: get year numeric value (adjust if your yearSelector is a <select>)
   function getSelectedYear() {
     if (!yearSelectorEl) return window.currentYear;
-    // if yearSelector is a button showing year text:
     const txt = yearSelectorEl.textContent.trim();
     const y = parseInt(txt, 10);
     return Number.isFinite(y) ? y : window.currentYear;
   }
 
-  // Activate quarter by zero-based index
   function activateQuarterIndex(idx) {
     idx = Math.max(0, Math.min(quarterBtns.length - 1, idx));
-    quarterBtns.forEach((b, i) => b.classList.toggle('chart__quarter-btn--active', i === idx));
-    // update global currentQuarter (1-based)
-    window.currentQuarter = parseInt(quarterBtns[idx].dataset.quarter, 10) || (idx + 1);
-    // call your existing chart update
+    quarterBtns.forEach((b, i) =>
+      b.classList.toggle("chart__quarter-btn--active", i === idx)
+    );
+    window.currentQuarter =
+      parseInt(quarterBtns[idx].dataset.quarter, 10) || idx + 1;
     updateChart(getSelectedYear(), window.currentQuarter);
-    // debug: console.log('Activated quarter', window.currentQuarter);
   }
 
-  // --- initialize from existing active button (if any) ---
-  const activeBtn = document.querySelector('.chart__quarter-btn.chart__quarter-btn--active');
+  const activeBtn = document.querySelector(
+    ".chart__quarter-btn.chart__quarter-btn--active"
+  );
   if (activeBtn) {
     const idx = quarterBtns.indexOf(activeBtn);
     if (idx >= 0) activateQuarterIndex(idx);
@@ -42,21 +41,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Click + Ripple handler ---
   quarterBtns.forEach((btn, idx) => {
-    btn.addEventListener('click', (e) => {
-      // ripple (safe clientX/clientY fallback)
+    btn.addEventListener("click", (e) => {
       const rect = btn.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
-      const circle = document.createElement('span');
-      circle.className = 'ripple';
+      const circle = document.createElement("span");
+      circle.className = "ripple";
       circle.style.width = circle.style.height = `${size}px`;
-      const clientX = (e.clientX !== undefined) ? e.clientX : (rect.left + rect.width / 2);
-      const clientY = (e.clientY !== undefined) ? e.clientY : (rect.top + rect.height / 2);
+      const clientX =
+        e.clientX !== undefined ? e.clientX : rect.left + rect.width / 2;
+      const clientY =
+        e.clientY !== undefined ? e.clientY : rect.top + rect.height / 2;
       circle.style.left = `${clientX - rect.left - size / 2}px`;
       circle.style.top = `${clientY - rect.top - size / 2}px`;
       btn.appendChild(circle);
-      setTimeout(() => circle.remove(), 600);
+      setTimeout(() => circle.remove(), 1000);
 
-      // activate
       activateQuarterIndex(idx);
     });
   });
@@ -70,33 +69,43 @@ document.addEventListener('DOMContentLoaded', () => {
     pointerDown = true;
   }
   function onPointerEnd(x) {
-    if (!pointerDown || startX === null) { pointerDown = false; startX = null; return; }
+    if (!pointerDown || startX === null) {
+      pointerDown = false;
+      startX = null;
+      return;
+    }
     const diff = x - startX;
     const threshold = 50;
-    const currentIndex = quarterBtns.findIndex(b => b.classList.contains('chart__quarter-btn--active'));
+    const currentIndex = quarterBtns.findIndex((b) =>
+      b.classList.contains("chart__quarter-btn--active")
+    );
     if (Math.abs(diff) > threshold) {
-      if (diff > 0) activateQuarterIndex(currentIndex - 1); // swipe right -> prev
-      else activateQuarterIndex(currentIndex + 1);         // swipe left -> next
+      if (diff > 0) activateQuarterIndex(currentIndex - 1);
+      else activateQuarterIndex(currentIndex + 1);
     }
     pointerDown = false;
     startX = null;
   }
 
   // touch events
-  chart.addEventListener('touchstart', e => onPointerStart(e.touches[0].clientX), { passive: true });
-  chart.addEventListener('touchend', e => onPointerEnd(e.changedTouches[0].clientX), { passive: true });
+  chart.addEventListener(
+    "touchstart",
+    (e) => onPointerStart(e.touches[0].clientX),
+    { passive: true }
+  );
+  chart.addEventListener(
+    "touchend",
+    (e) => onPointerEnd(e.changedTouches[0].clientX),
+    { passive: true }
+  );
 
-  // mouse drag support (for desktop testing)
-  chart.addEventListener('mousedown', e => onPointerStart(e.clientX));
-  window.addEventListener('mouseup', e => onPointerEnd(e.clientX));
-  // optional: prevent text selection when dragging
-  chart.addEventListener('dragstart', e => e.preventDefault());
+  chart.addEventListener("mousedown", (e) => onPointerStart(e.clientX));
+  window.addEventListener("mouseup", (e) => onPointerEnd(e.clientX));
+  chart.addEventListener("dragstart", (e) => e.preventDefault());
 });
 
-
-
 // Parallax effect
-(function() {
+(function () {
   const body = document.body;
   let lastScroll = 0;
   let ticking = false;
@@ -105,29 +114,29 @@ document.addEventListener('DOMContentLoaded', () => {
     lastScroll = window.scrollY || window.pageYOffset;
     if (!ticking) {
       window.requestAnimationFrame(() => {
-        // small parallax factor (smaller = more subtle)
         const factor = 0.12;
-        // translateY is hardware-accelerated and performant:
-        body.style.transform = `translate3d(0, ${lastScroll * factor * -1}px, 0)`;
-        // keep a fallback background-position tweak (optional)
-        body.style.backgroundPosition = `center calc(50% + ${lastScroll * factor}px)`;
+        body.style.transform = `translate3d(0, ${
+          lastScroll * factor * -1
+        }px, 0)`;
+        body.style.backgroundPosition = `center calc(50% + ${
+          lastScroll * factor
+        }px)`;
         ticking = false;
       });
       ticking = true;
     }
   }
 
-  // Respect reduced motion
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
   if (!prefersReduced) {
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
   }
 })();
 
-
-
 /* Typewriter */
-let typewriterTimer; // global timer reference
+let typewriterTimer;
 
 function startTypewriter() {
   const part1 = i18next.t("part1");
@@ -135,7 +144,7 @@ function startTypewriter() {
   const element = document.querySelector(".hero__text");
   element.innerHTML = "";
 
-  // clear any old typewriter
+  // clear old typewriter
   if (typewriterTimer) clearTimeout(typewriterTimer);
 
   let index = 0,
@@ -167,78 +176,30 @@ const barsContainer = document.querySelector(".chart__bars");
 function renderChartLines() {
   if (!barsContainer) return;
 
-  // Clear only the old lines (not the whole bars container if it has other children)
   barsContainer
-    .querySelectorAll(".line-container")
+    .querySelectorAll(".chart__line-container")
     .forEach((line) => line.remove());
 
-  // determine scale factor based on window size
-  let scale = 1;
-  if (window.innerWidth < 400) {
-    scale = 0.17;
-  } else if (window.innerWidth < 450) {
-    scale = 0.19;
-  } else if (window.innerWidth < 500) {
-    scale = 0.22;
-  } else if (window.innerWidth < 550) {
-    scale = 0.26;
-  } else if (window.innerWidth < 600) {
-    scale = 0.29;
-  } else if (window.innerWidth < 650) {
-    scale = 0.32;
-  } else if (window.innerWidth < 700) {
-    scale = 0.35;
-  } else if (window.innerWidth < 750) {
-    scale = 0.38;
-  } else if (window.innerWidth < 800) {
-    scale = 0.41;
-  } else if (window.innerWidth < 850) {
-    scale = 0.43;
-  } else if (window.innerWidth < 900) {
-    scale = 0.45;
-  } else if (window.innerWidth < 950) {
-    scale = 0.5;
-  } else if (window.innerWidth < 1000) {
-    scale = 0.55;
-  } else if (window.innerWidth < 1050) {
-    scale = 0.62;
-  } else if (window.innerWidth < 1100) {
-    scale = 0.66;
-  } else if (window.innerWidth < 1150) {
-    scale = 0.78;
-  } else if (window.innerWidth < 1200) {
-    scale = 0.83;
-  } else if (window.innerWidth < 1250) {
-    scale = 0.93;
-  }
-
-  // base step (104px) × scale
-  const stepWidth = 104 * scale;
+  const stepWidth = (barsContainer.clientWidth / 500) * 45;
 
   for (let i = 0; i <= 10; i++) {
     const line = document.createElement("div");
-    line.className = "line-container";
+    line.className = "chart__line-container";
 
     line.style.left = i === 0 ? "0" : `${i * stepWidth}px`;
     if (i === 0) line.style.justifyContent = "flex-start";
 
     line.innerHTML = `
-      <div class="vertical-line"></div>
-      <span class="line-number">${i * 50}</span>
+      <div class="chart__vertical-line"></div>
+      <span class="chart__line-number">${i * 50}</span>
     `;
 
     barsContainer.appendChild(line);
   }
 }
 
-// render once and update on resize
 renderChartLines();
 window.addEventListener("resize", renderChartLines);
-
-/* Legend label offset */
-document.querySelectorAll(".legend__label").forEach((label) => {
-  if (label.dataset.offset) label.style.top = label.dataset.offset + "px";
-});
 
 /* Mock chart data for years 2025–2020 */
 const chartData = {
@@ -247,320 +208,320 @@ const chartData = {
     1: {
       A: [
         {
-          width: 40,
+          value: 111,
+          borderValue: 16,
           tooltip: "AAA → АО — 111 | ООО — 16",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 55,
+          value: 168,
           tooltip: "AA → АО — 168 | ООО — 8",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
+          borderValue: 8,
         },
         {
-          width: 20,
+          value: 89,
           tooltip: "A → АО — 89 | ООО — 11",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
+          borderValue: 11,
         },
       ],
       B: [
         {
-          width: 35,
+          value: 100,
           tooltip: "BBB → АО — 100 | ООО — 20",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
+          borderValue: 20,
         },
         {
-          width: 50,
+          value: 150,
           tooltip: "BB → АО — 150 | ООО — 10",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
+          borderValue: 10,
         },
         {
-          width: 30,
+          value: 90,
           tooltip: "B → АО — 90 | ООО — 15",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
+          borderValue: 15,
         },
       ],
       C: [
         {
-          width: 45,
+          value: 120,
           tooltip: "CCC → АО — 120 | ООО — 20",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
+          borderValue: 20,
         },
         {
-          width: 60,
+          value: 180,
           tooltip: "CC → АО — 180 | ООО — 15",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
+          borderValue: 15,
         },
         {
-          width: 25,
+          value: 95,
           tooltip: "C → АО — 95 | ООО — 12",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
+          borderValue: 12,
         },
       ],
       D: [
         {
-          width: 50,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 130,
+          tooltip: "D → АО — 130 | ООО — 18",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
+          borderValue: 18,
         },
       ],
     },
     2: {
       A: [
         {
-          width: 20,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 126,
+          borderValue: 14,
+          tooltip: "AAA → АО — 100 | ООО — 14",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 25,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 89,
+          borderValue: 9,
+          tooltip: "AA → АО — 120 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 75,
+          borderValue: 11,
+          tooltip: "A → АО — 75 | ООО — 11",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 95,
+          borderValue: 16,
+          tooltip: "BBB → АО — 95 | ООО — 16",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 130,
+          borderValue: 7,
+          tooltip: "BB → АО — 130 | ООО — 7",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 40,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 70,
+          borderValue: 10,
+          tooltip: "B → АО — 70 | ООО — 10",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 110,
+          borderValue: 12,
+          tooltip: "CCC → АО — 110 | ООО — 12",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 20,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 85,
+          borderValue: 8,
+          tooltip: "CC → АО — 85 | ООО — 8",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 35,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 9,
+          tooltip: "C → АО — 65 | ООО — 9",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 90,
+          borderValue: 10,
+          tooltip: "D → АО — 90 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     3: {
       A: [
         {
-          width: 30,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 85,
+          borderValue: 13,
+          tooltip: "AAA → АО — 85 | ООО — 13",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 115,
+          borderValue: 11,
+          tooltip: "AA → АО — 115 | ООО — 11",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 80,
+          borderValue: 10,
+          tooltip: "A → АО — 80 | ООО — 10",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 105,
+          borderValue: 15,
+          tooltip: "BBB → АО — 105 | ООО — 15",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 125,
+          borderValue: 6,
+          tooltip: "BB → АО — 125 | ООО — 6",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 60,
+          borderValue: 8,
+          tooltip: "B → АО — 60 | ООО — 8",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 95,
+          borderValue: 10,
+          tooltip: "CCC → АО — 95 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 100,
+          borderValue: 12,
+          tooltip: "CC → АО — 100 | ООО — 12",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 15,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 7,
+          tooltip: "C → АО — 70 | ООО — 7",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 30,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 80,
+          borderValue: 9,
+          tooltip: "D → АО — 80 | ООО — 9",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     4: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 95,
+          borderValue: 10,
+          tooltip: "AAA → АО — 95 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 105,
+          borderValue: 12,
+          tooltip: "AA → АО — 105 | ООО — 12",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 10,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 70,
+          borderValue: 11,
+          tooltip: "A → АО — 70 | ООО — 11",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 110,
+          borderValue: 14,
+          tooltip: "BBB → АО — 110 | ООО — 14",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 120,
+          borderValue: 9,
+          tooltip: "BB → АО — 120 | ООО — 9",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 65,
+          borderValue: 10,
+          tooltip: "B → АО — 65 | ООО — 10",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 25,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 100,
+          borderValue: 11,
+          tooltip: "CCC → АО — 100 | ООО — 11",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 95,
+          borderValue: 8,
+          tooltip: "CC → АО — 95 | ООО — 8",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 60,
+          borderValue: 9,
+          tooltip: "C → АО — 60 | ООО — 9",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 85,
+          borderValue: 10,
+          tooltip: "D → АО — 85 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
@@ -570,320 +531,320 @@ const chartData = {
     1: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 110,
+          borderValue: 12,
+          tooltip: "AAA → АО — 90 | ООО — 12",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 55,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 86,
+          borderValue: 9,
+          tooltip: "AA → АО — 110 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 114,
+          borderValue: 10,
+          tooltip: "A → АО — 85 | ООО — 10",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 76,
+          borderValue: 15,
+          tooltip: "BBB → АО — 100 | ООО — 15",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 97,
+          borderValue: 7,
+          tooltip: "BB → АО — 135 | ООО — 7",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 32,
+          borderValue: 8,
+          tooltip: "B → АО — 60 | ООО — 8",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 45,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 120,
+          borderValue: 12,
+          tooltip: "CCC → АО — 85 | ООО — 12",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 60,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 56,
+          borderValue: 10,
+          tooltip: "CC → АО — 95 | ООО — 10",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 89,
+          borderValue: 9,
+          tooltip: "C → АО — 75 | ООО — 9",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 50,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 24,
+          borderValue: 4,
+          tooltip: "D → АО — 70 | ООО — 11",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     2: {
       A: [
         {
-          width: 20,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 80,
+          borderValue: 10,
+          tooltip: "AAA → АО — 80 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 25,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 95,
+          borderValue: 11,
+          tooltip: "AA → АО — 95 | ООО — 11",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 70,
+          borderValue: 9,
+          tooltip: "A → АО — 70 | ООО — 9",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 105,
+          borderValue: 12,
+          tooltip: "BBB → АО — 105 | ООО — 12",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 115,
+          borderValue: 8,
+          tooltip: "BB → АО — 115 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 40,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 85,
+          borderValue: 7,
+          tooltip: "B → АО — 85 | ООО — 7",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 10,
+          tooltip: "CCC → АО — 90 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 20,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 100,
+          borderValue: 11,
+          tooltip: "CC → АО — 100 | ООО — 11",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 35,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 8,
+          tooltip: "C → АО — 65 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 60,
+          borderValue: 9,
+          tooltip: "D → АО — 60 | ООО — 9",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     3: {
       A: [
         {
-          width: 30,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 105,
+          borderValue: 10,
+          tooltip: "AAA → АО — 105 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 120,
+          borderValue: 8,
+          tooltip: "AA → АО — 120 | ООО — 8",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 80,
+          borderValue: 12,
+          tooltip: "A → АО — 80 | ООО — 12",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 115,
+          borderValue: 14,
+          tooltip: "BBB → АО — 115 | ООО — 14",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 95,
+          borderValue: 9,
+          tooltip: "BB → АО — 95 | ООО — 9",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 70,
+          borderValue: 11,
+          tooltip: "B → АО — 70 | ООО — 11",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 85,
+          borderValue: 10,
+          tooltip: "CCC → АО — 85 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 105,
+          borderValue: 8,
+          tooltip: "CC → АО — 105 | ООО — 8",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 15,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 60,
+          borderValue: 9,
+          tooltip: "C → АО — 60 | ООО — 9",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 30,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 65,
+          borderValue: 10,
+          tooltip: "D → АО — 65 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     4: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 100,
+          borderValue: 9,
+          tooltip: "AAA → АО — 100 | ООО — 9",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 90,
+          borderValue: 11,
+          tooltip: "AA → АО — 90 | ООО — 11",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 10,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 75,
+          borderValue: 10,
+          tooltip: "A → АО — 75 | ООО — 10",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 120,
+          borderValue: 12,
+          tooltip: "BBB → АО — 120 | ООО — 12",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 130,
+          borderValue: 9,
+          tooltip: "BB → АО — 130 | ООО — 9",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 60,
+          borderValue: 8,
+          tooltip: "B → АО — 60 | ООО — 8",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 25,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 95,
+          borderValue: 10,
+          tooltip: "CCC → АО — 95 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 85,
+          borderValue: 12,
+          tooltip: "CC → АО — 85 | ООО — 12",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 10,
+          tooltip: "C → АО — 70 | ООО — 10",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 50,
+          borderValue: 9,
+          tooltip: "D → АО — 50 | ООО — 9",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
@@ -893,320 +854,320 @@ const chartData = {
     1: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 85,
+          borderValue: 12,
+          tooltip: "AAA → АО — 85 | ООО — 12",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 55,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 95,
+          borderValue: 10,
+          tooltip: "AA → АО — 95 | ООО — 10",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 105,
+          borderValue: 9,
+          tooltip: "A → АО — 105 | ООО — 9",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 100,
+          borderValue: 14,
+          tooltip: "BBB → АО — 100 | ООО — 14",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 115,
+          borderValue: 10,
+          tooltip: "BB → АО — 115 | ООО — 10",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 80,
+          borderValue: 8,
+          tooltip: "B → АО — 80 | ООО — 8",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 45,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 9,
+          tooltip: "CCC → АО — 90 | ООО — 9",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 60,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 105,
+          borderValue: 11,
+          tooltip: "CC → АО — 105 | ООО — 11",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 10,
+          tooltip: "C → АО — 70 | ООО — 10",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 50,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 55,
+          borderValue: 11,
+          tooltip: "D → АО — 55 | ООО — 11",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     2: {
       A: [
         {
-          width: 20,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 110,
+          borderValue: 11,
+          tooltip: "AAA → АО — 110 | ООО — 11",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 25,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 85,
+          borderValue: 10,
+          tooltip: "AA → АО — 85 | ООО — 10",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 70,
+          borderValue: 9,
+          tooltip: "A → АО — 70 | ООО — 9",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 105,
+          borderValue: 13,
+          tooltip: "BBB → АО — 105 | ООО — 13",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 120,
+          borderValue: 8,
+          tooltip: "BB → АО — 120 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 40,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 85,
+          borderValue: 9,
+          tooltip: "B → АО — 85 | ООО — 9",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 95,
+          borderValue: 12,
+          tooltip: "CCC → АО — 95 | ООО — 12",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 20,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 90,
+          borderValue: 10,
+          tooltip: "CC → АО — 90 | ООО — 10",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 35,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 8,
+          tooltip: "C → АО — 65 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 60,
+          borderValue: 10,
+          tooltip: "D → АО — 60 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     3: {
       A: [
         {
-          width: 30,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 90,
+          borderValue: 10,
+          tooltip: "AAA → АО — 90 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 100,
+          borderValue: 12,
+          tooltip: "AA → АО — 100 | ООО — 12",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 95,
+          borderValue: 9,
+          tooltip: "A → АО — 95 | ООО — 9",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 125,
+          borderValue: 10,
+          tooltip: "BBB → АО — 125 | ООО — 10",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 105,
+          borderValue: 8,
+          tooltip: "BB → АО — 105 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 70,
+          borderValue: 11,
+          tooltip: "B → АО — 70 | ООО — 11",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 85,
+          borderValue: 10,
+          tooltip: "CCC → АО — 85 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 95,
+          borderValue: 9,
+          tooltip: "CC → АО — 95 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 15,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 80,
+          borderValue: 8,
+          tooltip: "C → АО — 80 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 30,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 60,
+          borderValue: 10,
+          tooltip: "D → АО — 60 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     4: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 95,
+          borderValue: 11,
+          tooltip: "AAA → АО — 95 | ООО — 11",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 105,
+          borderValue: 9,
+          tooltip: "AA → АО — 105 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 10,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 10,
+          tooltip: "A → АО — 85 | ООО — 10",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 120,
+          borderValue: 10,
+          tooltip: "BBB → АО — 120 | ООО — 10",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 95,
+          borderValue: 12,
+          tooltip: "BB → АО — 95 | ООО — 12",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 80,
+          borderValue: 8,
+          tooltip: "B → АО — 80 | ООО — 8",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 25,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 100,
+          borderValue: 10,
+          tooltip: "CCC → АО — 100 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 90,
+          borderValue: 9,
+          tooltip: "CC → АО — 90 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 10,
+          tooltip: "C → АО — 70 | ООО — 10",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 55,
+          borderValue: 11,
+          tooltip: "D → АО — 55 | ООО — 11",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
@@ -1216,320 +1177,320 @@ const chartData = {
     1: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 95,
+          borderValue: 10,
+          tooltip: "AAA → АО — 95 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 55,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 110,
+          borderValue: 9,
+          tooltip: "AA → АО — 110 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 8,
+          tooltip: "A → АО — 85 | ООО — 8",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 100,
+          borderValue: 12,
+          tooltip: "BBB → АО — 100 | ООО — 12",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 125,
+          borderValue: 10,
+          tooltip: "BB → АО — 125 | ООО — 10",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 70,
+          borderValue: 9,
+          tooltip: "B → АО — 70 | ООО — 9",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 45,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 11,
+          tooltip: "CCC → АО — 90 | ООО — 11",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 60,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 80,
+          borderValue: 10,
+          tooltip: "CC → АО — 80 | ООО — 10",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 8,
+          tooltip: "C → АО — 65 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 50,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 55,
+          borderValue: 10,
+          tooltip: "D → АО — 55 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     2: {
       A: [
         {
-          width: 20,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 105,
+          borderValue: 12,
+          tooltip: "AAA → АО — 105 | ООО — 12",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 25,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 95,
+          borderValue: 9,
+          tooltip: "AA → АО — 95 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 70,
+          borderValue: 11,
+          tooltip: "A → АО — 70 | ООО — 11",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 115,
+          borderValue: 10,
+          tooltip: "BBB → АО — 115 | ООО — 10",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 120,
+          borderValue: 8,
+          tooltip: "BB → АО — 120 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 40,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 80,
+          borderValue: 9,
+          tooltip: "B → АО — 80 | ООО — 9",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 85,
+          borderValue: 12,
+          tooltip: "CCC → АО — 85 | ООО — 12",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 20,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 90,
+          borderValue: 10,
+          tooltip: "CC → АО — 90 | ООО — 10",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 35,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 8,
+          tooltip: "C → АО — 65 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 55,
+          borderValue: 10,
+          tooltip: "D → АО — 55 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     3: {
       A: [
         {
-          width: 30,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 90,
+          borderValue: 9,
+          tooltip: "AAA → АО — 90 | ООО — 9",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 100,
+          borderValue: 12,
+          tooltip: "AA → АО — 100 | ООО — 12",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 10,
+          tooltip: "A → АО — 85 | ООО — 10",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 130,
+          borderValue: 11,
+          tooltip: "BBB → АО — 130 | ООО — 11",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 110,
+          borderValue: 8,
+          tooltip: "BB → АО — 110 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 60,
+          borderValue: 10,
+          tooltip: "B → АО — 60 | ООО — 10",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 95,
+          borderValue: 12,
+          tooltip: "CCC → АО — 95 | ООО — 12",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 85,
+          borderValue: 10,
+          tooltip: "CC → АО — 85 | ООО — 10",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 15,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 8,
+          tooltip: "C → АО — 70 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 30,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 45,
+          borderValue: 9,
+          tooltip: "D → АО — 45 | ООО — 9",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     4: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 105,
+          borderValue: 10,
+          tooltip: "AAA → АО — 105 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 95,
+          borderValue: 11,
+          tooltip: "AA → АО — 95 | ООО — 11",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 10,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 80,
+          borderValue: 9,
+          tooltip: "A → АО — 80 | ООО — 9",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 120,
+          borderValue: 10,
+          tooltip: "BBB → АО — 120 | ООО — 10",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 100,
+          borderValue: 8,
+          tooltip: "BB → АО — 100 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 85,
+          borderValue: 11,
+          tooltip: "B → АО — 85 | ООО — 11",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 25,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 12,
+          tooltip: "CCC → АО — 90 | ООО — 12",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 85,
+          borderValue: 9,
+          tooltip: "CC → АО — 85 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 75,
+          borderValue: 10,
+          tooltip: "C → АО — 75 | ООО — 10",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 50,
+          borderValue: 9,
+          tooltip: "D → АО — 50 | ООО — 9",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
@@ -1539,320 +1500,320 @@ const chartData = {
     1: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 110,
+          borderValue: 10,
+          tooltip: "AAA → АО — 110 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 55,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 95,
+          borderValue: 9,
+          tooltip: "AA → АО — 95 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 8,
+          tooltip: "A → АО — 85 | ООО — 8",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 120,
+          borderValue: 11,
+          tooltip: "BBB → АО — 120 | ООО — 11",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 115,
+          borderValue: 9,
+          tooltip: "BB → АО — 115 | ООО — 9",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 75,
+          borderValue: 10,
+          tooltip: "B → АО — 75 | ООО — 10",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 45,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 95,
+          borderValue: 10,
+          tooltip: "CCC → АО — 95 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 60,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 80,
+          borderValue: 9,
+          tooltip: "CC → АО — 80 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 8,
+          tooltip: "C → АО — 65 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 50,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 45,
+          borderValue: 10,
+          tooltip: "D → АО — 45 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     2: {
       A: [
         {
-          width: 20,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 95,
+          borderValue: 11,
+          tooltip: "AAA → АО — 95 | ООО — 11",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 25,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 100,
+          borderValue: 9,
+          tooltip: "AA → АО — 100 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 8,
+          tooltip: "A → АО — 85 | ООО — 8",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 110,
+          borderValue: 12,
+          tooltip: "BBB → АО — 110 | ООО — 12",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 105,
+          borderValue: 8,
+          tooltip: "BB → АО — 105 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 40,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 75,
+          borderValue: 9,
+          tooltip: "B → АО — 75 | ООО — 9",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 10,
+          tooltip: "CCC → АО — 90 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 20,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 80,
+          borderValue: 9,
+          tooltip: "CC → АО — 80 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 35,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 8,
+          tooltip: "C → АО — 70 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 50,
+          borderValue: 10,
+          tooltip: "D → АО — 50 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     3: {
       A: [
         {
-          width: 30,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 105,
+          borderValue: 10,
+          tooltip: "AAA → АО — 105 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 95,
+          borderValue: 9,
+          tooltip: "AA → АО — 95 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 8,
+          tooltip: "A → АО — 85 | ООО — 8",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 110,
+          borderValue: 12,
+          tooltip: "BBB → АО — 110 | ООО — 12",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 100,
+          borderValue: 8,
+          tooltip: "BB → АО — 100 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 70,
+          borderValue: 9,
+          tooltip: "B → АО — 70 | ООО — 9",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 11,
+          tooltip: "CCC → АО — 90 | ООО — 11",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 75,
+          borderValue: 9,
+          tooltip: "CC → АО — 75 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 15,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 8,
+          tooltip: "C → АО — 65 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 30,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 45,
+          borderValue: 10,
+          tooltip: "D → АО — 45 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     4: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 95,
+          borderValue: 10,
+          tooltip: "AAA → АО — 95 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 85,
+          borderValue: 9,
+          tooltip: "AA → АО — 85 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 10,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 80,
+          borderValue: 8,
+          tooltip: "A → АО — 80 | ООО — 8",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 115,
+          borderValue: 11,
+          tooltip: "BBB → АО — 115 | ООО — 11",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 100,
+          borderValue: 9,
+          tooltip: "BB → АО — 100 | ООО — 9",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 85,
+          borderValue: 10,
+          tooltip: "B → АО — 85 | ООО — 10",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 25,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 8,
+          tooltip: "CCC → АО — 90 | ООО — 8",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 80,
+          borderValue: 9,
+          tooltip: "CC → АО — 80 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 10,
+          tooltip: "C → АО — 65 | ООО — 10",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 45,
+          borderValue: 10,
+          tooltip: "D → АО — 45 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
@@ -1862,320 +1823,320 @@ const chartData = {
     1: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 100,
+          borderValue: 11,
+          tooltip: "AAA → АО — 100 | ООО — 11",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 55,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 90,
+          borderValue: 9,
+          tooltip: "AA → АО — 90 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 8,
+          tooltip: "A → АО — 85 | ООО — 8",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 120,
+          borderValue: 10,
+          tooltip: "BBB → АО — 120 | ООО — 10",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 105,
+          borderValue: 9,
+          tooltip: "BB → АО — 105 | ООО — 9",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 80,
+          borderValue: 11,
+          tooltip: "B → АО — 80 | ООО — 11",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 45,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 95,
+          borderValue: 10,
+          tooltip: "CCC → АО — 95 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 60,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 85,
+          borderValue: 8,
+          tooltip: "CC → АО — 85 | ООО — 8",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 9,
+          tooltip: "C → АО — 70 | ООО — 9",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 50,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 50,
+          borderValue: 10,
+          tooltip: "D → АО — 50 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     2: {
       A: [
         {
-          width: 20,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 105,
+          borderValue: 10,
+          tooltip: "AAA → АО — 105 | ООО — 10",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 25,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 95,
+          borderValue: 8,
+          tooltip: "AA → АО — 95 | ООО — 8",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 80,
+          borderValue: 9,
+          tooltip: "A → АО — 80 | ООО — 9",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 110,
+          borderValue: 11,
+          tooltip: "BBB → АО — 110 | ООО — 11",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 100,
+          borderValue: 10,
+          tooltip: "BB → АО — 100 | ООО — 10",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 40,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 85,
+          borderValue: 8,
+          tooltip: "B → АО — 85 | ООО — 8",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 9,
+          tooltip: "CCC → АО — 90 | ООО — 9",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 20,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 80,
+          borderValue: 10,
+          tooltip: "CC → АО — 80 | ООО — 10",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 35,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 9,
+          tooltip: "C → АО — 70 | ООО — 9",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 45,
+          borderValue: 10,
+          tooltip: "D → АО — 45 | ООО — 10",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     3: {
       A: [
         {
-          width: 30,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 100,
+          borderValue: 8,
+          tooltip: "AAA → АО — 100 | ООО — 8",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 90,
+          borderValue: 9,
+          tooltip: "AA → АО — 90 | ООО — 9",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 10,
+          tooltip: "A → АО — 85 | ООО — 10",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 15,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 110,
+          borderValue: 9,
+          tooltip: "BBB → АО — 110 | ООО — 9",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 100,
+          borderValue: 8,
+          tooltip: "BB → АО — 100 | ООО — 8",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 20,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 85,
+          borderValue: 9,
+          tooltip: "B → АО — 85 | ООО — 9",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 15,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 10,
+          tooltip: "CCC → АО — 90 | ООО — 10",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 50,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 75,
+          borderValue: 9,
+          tooltip: "CC → АО — 75 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 15,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 70,
+          borderValue: 8,
+          tooltip: "C → АО — 70 | ООО — 8",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 30,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 50,
+          borderValue: 9,
+          tooltip: "D → АО — 50 | ООО — 9",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
     4: {
       A: [
         {
-          width: 40,
-          tooltip: "AAA → АО — 111 | ООО — 16",
+          value: 95,
+          borderValue: 9,
+          tooltip: "AAA → АО — 95 | ООО — 9",
           bg: "#009A44",
           border: "hsl(146,100%,24%)",
-          borderWidth: 16,
         },
         {
-          width: 35,
-          tooltip: "AA → АО — 168 | ООО — 8",
+          value: 90,
+          borderValue: 8,
+          tooltip: "AA → АО — 90 | ООО — 8",
           bg: "#91BD00",
           border: "hsl(74,100%,30%)",
-          borderWidth: 8,
         },
         {
-          width: 10,
-          tooltip: "A → АО — 89 | ООО — 11",
+          value: 85,
+          borderValue: 9,
+          tooltip: "A → АО — 85 | ООО — 9",
           bg: "#A5C91F",
           border: "hsl(73,73%,36%)",
-          borderWidth: 11,
         },
       ],
       B: [
         {
-          width: 35,
-          tooltip: "BBB → АО — 100 | ООО — 20",
+          value: 115,
+          borderValue: 10,
+          tooltip: "BBB → АО — 115 | ООО — 10",
           bg: "#D9B600",
           border: "hsl(50,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 40,
-          tooltip: "BB → АО — 150 | ООО — 10",
+          value: 100,
+          borderValue: 9,
+          tooltip: "BB → АО — 100 | ООО — 9",
           bg: "#D9CE04",
           border: "hsl(57,96%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 30,
-          tooltip: "B → АО — 90 | ООО — 15",
+          value: 85,
+          borderValue: 8,
+          tooltip: "B → АО — 85 | ООО — 8",
           bg: "#EFE31E",
           border: "hsl(57,87%,42%)",
-          borderWidth: 11,
         },
       ],
       C: [
         {
-          width: 25,
-          tooltip: "CCC → АО — 120 | ООО — 20",
+          value: 90,
+          borderValue: 8,
+          tooltip: "CCC → АО — 90 | ООО — 8",
           bg: "#D96400",
           border: "hsl(28,100%,34%)",
-          borderWidth: 16,
         },
         {
-          width: 30,
-          tooltip: "CC → АО — 180 | ООО — 15",
+          value: 80,
+          borderValue: 9,
+          tooltip: "CC → АО — 80 | ООО — 9",
           bg: "#D99C00",
           border: "hsl(43,100%,34%)",
-          borderWidth: 8,
         },
         {
-          width: 25,
-          tooltip: "C → АО — 95 | ООО — 12",
+          value: 65,
+          borderValue: 9,
+          tooltip: "C → АО — 65 | ООО — 9",
           bg: "#F0AE13",
           border: "hsl(42,88%,40%)",
-          borderWidth: 11,
         },
       ],
       D: [
         {
-          width: 40,
-          tooltip: "DDD → АО — 130 | ООО — 18",
+          value: 45,
+          borderValue: 9,
+          tooltip: "D → АО — 45 | ООО — 9",
           bg: "#D92804",
           border: "hsl(10,96%,34%)",
-          borderWidth: 16,
         },
       ],
     },
@@ -2187,7 +2148,7 @@ let currentYear = 2025;
 let currentQuarter = 1;
 
 /* Elements */
-const chartBars = document.querySelectorAll(".bar");
+const chartBars = document.querySelectorAll(".chart__bar");
 const chartHeaderNumbers = document.querySelector(".chart__header-numbers");
 const chartTooltip = document.getElementById("tooltip");
 const quarterButtons = document.querySelectorAll(".chart__quarter-btn");
@@ -2196,8 +2157,6 @@ const yearSelector = document.querySelector(".chart__header-year-selector");
 /* Function to update chart */
 function updateChart(year, quarter) {
   const headerNums = chartData[year].headerNumbers;
-  const chartHeaderNumbers = document.querySelector(".chart__header-numbers");
-
   chartHeaderNumbers.textContent = i18next.t(chartHeaderNumbers.dataset.i18n, {
     AO: headerNums.AO,
     OOO: headerNums.OOO,
@@ -2205,34 +2164,31 @@ function updateChart(year, quarter) {
 
   // Update bars
   const quarterData = chartData[year][quarter];
-  const barGroups = document.querySelectorAll(".bar-group");
+  const barGroups = document.querySelectorAll(".chart__bar-group");
 
   barGroups.forEach((groupEl) => {
-    const groupKey = groupEl.dataset.group; // "A" / "B" / "C" / "D"
+    const groupKey = groupEl.dataset.group;
     const groupData = quarterData[groupKey] || [];
-    const bars = groupEl.querySelectorAll(".bar");
+    const bars = groupEl.querySelectorAll(".chart__bar");
 
     bars.forEach((bar, i) => {
       if (groupData[i]) {
         const d = groupData[i];
 
-        // Hide first to allow re-animation
         bar.style.display = "none";
         bar.style.width = "0";
 
-        // Apply styles
         bar.style.background = d.bg;
-        bar.style.borderRight = `${d.borderWidth}px solid ${d.border}`;
+        bar.style.borderRight = `${d.borderValue}px solid ${d.border}`;
         bar.dataset.tooltip = d.tooltip;
 
-        // Force reflow, then animate
         setTimeout(() => {
           bar.style.display = "block";
           requestAnimationFrame(() => {
-            bar.style.width = d.width + "%";
+            bar.style.width =
+              (barsContainer.clientWidth / 500) * d.value + "px";
           });
         }, 50);
-
       } else {
         bar.style.display = "none";
       }
@@ -2240,13 +2196,11 @@ function updateChart(year, quarter) {
   });
 }
 
-// ✅ Trigger animation once when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   const defaultYear = Object.keys(chartData)[0];
   const defaultQuarter = Object.keys(chartData[defaultYear])[0];
   updateChart(defaultYear, defaultQuarter);
 });
-
 
 /* Tooltip */
 chartBars.forEach((bar) => {
@@ -2266,7 +2220,6 @@ chartBars.forEach((bar) => {
   });
 });
 
-
 /* Year selector dropdown logic */
 const yearDropdown = document.createElement("ul");
 yearDropdown.classList.add("chart__year-dropdown");
@@ -2275,16 +2228,16 @@ const parentRect = yearSelector.parentElement.getBoundingClientRect();
 
 yearDropdown.style.position = "absolute";
 const parent = yearSelector.parentElement;
-if (getComputedStyle(parent).position === "static") parent.style.position = "relative";
+if (getComputedStyle(parent).position === "static")
+  parent.style.position = "relative";
 const leftPx = rect.left - parentRect.left + parent.scrollLeft;
-const topPx  = rect.bottom - parentRect.top + parent.scrollTop;
+const topPx = rect.bottom - parentRect.top + parent.scrollTop;
 yearDropdown.style.left = Math.round(leftPx) + "px";
-yearDropdown.style.top  = Math.round(topPx)  + "px";
-
+yearDropdown.style.top = Math.round(topPx) + "px";
 
 yearSelector.parentElement.style.position = "relative";
 yearDropdown.style.background = "#fff";
-yearDropdown.style.border = "0.1rem solid #ccc";  
+yearDropdown.style.border = "0.1rem solid #ccc";
 yearDropdown.style.listStyle = "none";
 yearDropdown.style.padding = "0";
 yearDropdown.style.display = "none";
@@ -2299,7 +2252,6 @@ style.innerHTML = `
   }
 `;
 document.head.appendChild(style);
-
 
 yearSelector.parentElement.appendChild(yearDropdown);
 
@@ -2323,8 +2275,17 @@ yearSelector.addEventListener("click", () => {
     yearDropdown.style.display === "block" ? "none" : "block";
 });
 
-/* Initial render */
-updateChart(currentYear, currentQuarter);
+//Rating color assigning
+document
+  .querySelectorAll(
+    ".rating-table__score, .rating-table__category, .rating-table__category--small"
+  )
+  .forEach((el) => {
+    const rating = el.dataset.rating?.toLowerCase();
+    if (rating) {
+      el.style.color = `var(--color-${rating})`;
+    }
+  });
 
 /* Translation */
 i18next.init(
@@ -2375,7 +2336,8 @@ i18next.init(
           points_c3: "21-25 баллов",
           level_d: "низкий",
           points_d: "менее 20 баллов",
-          footer:"© 2025 Все права защищены. Национальное агентство перспективных проектов",
+          footer:
+            "© 2025 Все права защищены. Национальное агентство перспективных проектов",
         },
       },
       en: {
@@ -2420,7 +2382,8 @@ i18next.init(
           points_c3: "21-25 points",
           level_d: "low",
           points_d: "under 20 points",
-          footer:"© 2025 All rights reserved. National Agency of Perspective Projects",
+          footer:
+            "© 2025 All rights reserved. National Agency of Perspective Projects",
         },
       },
       uz: {
@@ -2465,7 +2428,8 @@ i18next.init(
           points_c3: "21-25 ball",
           level_d: "past",
           points_d: "20 balldan kam",
-          footer: "© 2025 Barcha huquqlar himoyalangan. Istiqbolli loyihalar milliy agentligi",
+          footer:
+            "© 2025 Barcha huquqlar himoyalangan. Istiqbolli loyihalar milliy agentligi",
         },
       },
     },
@@ -2487,4 +2451,3 @@ function changeLang(lang) {
     startTypewriter();
   });
 }
-

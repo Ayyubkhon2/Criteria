@@ -1,0 +1,537 @@
+body {
+  background: url("../assets/rating-bg.png") no-repeat center center fixed;
+  font-family: mulish;
+  color: #ffffff;
+  width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(0.625rem);
+  backdrop-filter: blur(0.625rem);
+}
+
+input,
+textarea,
+button, 
+select {
+  font-family: inherit;
+}
+
+@mixin transition($duration: 0.3s, $property: all, $timing: ease-out) {
+  transition: $property $duration $timing;
+}
+@mixin flex($direction: row, $justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin brad($radius: 1rem) {
+  border-radius: $radius;
+}
+
+@mixin bg($color: rgba(255, 255, 255, 0.2)) {
+  background-color: $color;
+}
+
+// Color variables
+:root {
+  --color-aaa: #009a44;
+  --color-aa: #91bd00;
+  --color-a: #a5c91f;
+  --color-bbb: #d9b600;
+  --color-bb: #d9ce04;
+  --color-b: #efe31e;
+  --color-ccc: #d96400;
+  --color-cc: #d99c00;
+  --color-c: #f0ae13;
+  --color-d: #d92804;
+  --color-NAPP: #00345c;
+}
+
+.layout {
+  max-width: 1200px;
+  width: 100%; 
+  min-height: 100vh;   
+  background-color: rgb(0, 0, 0, 0.2);
+  margin: 4rem auto;
+  @include brad;
+}
+
+.switcher {
+  max-width: 75rem;
+  width: 100%;
+  min-height: 4.125rem;
+  @include flex();
+  gap: 1rem;
+  &__btn {
+    width: 100%;
+    padding: 1.25rem 2.5rem;
+    @include brad;
+    background-color: rgb(255, 255, 255, 0.4);
+    gap: 0.625rem;
+    @include flex(row, center, center);
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+  }
+  &__btn--active {
+    background: #1a4c80;
+  }
+  &__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.variant {
+  display: none;
+  &--active {
+    display: block;
+  }
+  &__heading {
+    font-size: 4rem;
+    margin-top: 3.125rem;
+    text-align: center;
+    font-weight: 700;
+  }
+  &__subtitle {
+    text-align: center;
+    color: #00c37d;
+    font-size: 1rem;
+    margin-top: 1.25rem;
+  }
+}
+
+/* Variant 2 */
+/* Tabs */
+// .tabs {
+//   display: flex;
+//   justify-content: center;
+//   margin-bottom: 2rem;
+//   gap: 1rem;
+
+//   &__tab {
+//   background: #555;
+//   color: #fff;
+//   border: none;
+//   padding: 0.75rem 2rem;
+//   border-radius: 0.75rem;
+//   font-size: 1rem;
+//   cursor: pointer;
+// }
+
+// &__tab--active {
+//   background: #1e5fe0;
+// }
+// }
+
+/* Carousel */
+.carousel {
+  position: relative; 
+  @include flex(column, flex-start, center); 
+  gap: 3.125rem;
+  overflow: hidden;
+  align-content: flex-start;
+  flex-wrap: wrap; 
+  position: relative; 
+  &__track {
+    margin-top: 3.125rem;
+    @include flex(row, flex-start, center); 
+    gap: 1rem;
+    @include transition; 
+    width: max-content;   
+  }
+  /* Card */
+  &__card {
+    background: rgb(128, 128, 128, 0.5);
+    @include brad;
+    width: 18.75rem;
+    min-height: 15.625rem;
+    @include flex(column, center, center);
+    @include transition;
+  }
+  &__card:hover {
+    background-color: rgb(234, 243, 255, 0.5);
+  }
+  &__name {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 130%;
+  }
+  &__location {
+    font-size: 0.75rem;
+    color: #bbb;
+    @include flex(row, center, center);
+    gap: 0.125rem;
+    margin-top: 0.5rem;
+    line-height: 0.8125rem;
+  }
+  &__location-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  &__status {
+    font-size: 0.625rem;
+    color: #00c3ff;
+    margin-top: 0.5rem;
+    line-height: 0.8125rem; 
+  }
+  &__rating {
+    height: 6.25rem;
+    @include flex(column, space-between, center);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__container {
+    @include flex(row, center, center);
+    gap: 3.125rem;
+    margin-bottom: 1.25rem;
+  }
+  &__circle {
+    width: 4rem;
+    height: 4rem;
+    @include brad(50%);
+    @include flex(row, center, center);
+    background: #ffffff;
+    border: 4px solid currentColor;
+    color: var(--circle-color, #000); 
+  }
+  &__grade {
+    font-size: 1.875rem;
+    font-weight: bold;
+  }
+  &__score {
+    font-size: 1.375rem;
+  }
+  &__icon {
+    width: 6.25rem;
+    height: 6.25rem;
+    padding: 1rem;
+    @include brad;
+    background-color: #f4f8ff;
+    @include flex(row, center, center);
+    margin-bottom: 0.625rem;
+  }
+  &__photo { 
+    width: 4rem;
+    height: 4rem;
+    @include brad; 
+  }
+  &__btn-box {
+    @include flex();
+    gap: 1.25rem;
+    position: fixed;
+    top: 34.6875rem;  
+  }  
+  &__btn {
+    background: none;
+    border: none; 
+    cursor: pointer;
+  }
+  //   &__btn--right{
+  //   }
+  //   &__btn--left{
+  //   }
+}
+
+/* Tabs */
+// .tabs {
+//   display: flex;
+//   justify-content: center;
+//   background: #1a1a1a;
+//   padding: 0.5rem;
+//   gap: 1rem;
+// }
+// .tabs .tab {
+//   background: #333;
+//   border: none;
+//   padding: 0.75rem 1.5rem;
+//   color: #ccc;
+//   border-radius: 8px;
+//   cursor: pointer;
+// }
+// .tabs .tab.active {
+//   background: #0066cc;
+//   color: #fff;
+// }
+
+/* Variant 3 */
+.stats {
+  max-width: 75rem;
+  width: 100%;
+  min-height: 4.375rem;
+  padding: 0 6.25rem;
+  @include flex(row, space-between, center);
+  margin-top: 3.125rem;
+  &__stat {
+    border-left: 0.5rem solid #1a4c80;
+    padding-left: 1rem;
+    @include flex(column);
+    @include transition;
+  }
+  &__stat:hover {
+    transform: translateY(-0.375rem);
+    text-shadow: 0.25rem 0.375rem 0.1875rem rgba(255, 255, 255, 0.2);
+  }
+  &__stat-value {
+    font-size: 2.375rem;
+    font-weight: 800;
+    text-align: left;
+  }
+  &__stat-label {
+    font-size: 1rem;
+    text-align: left;
+  }
+}
+
+/* Emitter cards */
+.top-emitter {
+  &__title {
+    font-size: 2rem;
+    margin-top: 3.125rem;
+    text-align: center;
+    font-weight: 700;
+  }
+  &__list {
+    @include flex(row, center, center);
+    gap: 2rem;
+    margin-top: 3.125rem;
+    max-width: 75rem;
+    width: 100%;
+    min-height: 18.75rem;
+  }
+  &__card {
+    background: rgb(128, 128, 128, 0.5);
+    @include brad;
+    width: 100%;
+    height: 18.75rem;
+    @include flex(column, center, center);
+    position: relative;
+    @include transition;
+  }
+  &__card:hover {
+    background-color: rgb(234, 243, 255, 0.5);
+  }
+  &__name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 130%;
+  }
+  &__location {
+    font-size: 1rem;
+    color: #bbb;
+    @include flex(row, center, center);
+    gap: 0.125rem;
+    margin-top: 0.625rem;
+    line-height: 0.8125rem;
+  }
+  &__location-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  &__status {
+    font-size: 0.75rem;
+    color: #00c3ff;
+    margin-top: 0.625rem;
+    line-height: 0.8125rem;
+  }
+  &__rating {
+    position: absolute;
+    top: 1.5625rem;
+    right: 3.4375rem;
+    @include flex(column, center, center);
+    gap: 0.3125rem;
+  }
+  &__circle {
+    width: 2.75rem;
+    height: 2.75rem;  
+    @include brad(50%);
+    @include flex(row, center, center);
+    position: relative;
+    background: #ffffff;
+    border: 2px solid currentColor;
+    color: var(--circle-color, #000);
+  }
+  &__grade {
+    font-size: 1rem; 
+    font-weight: bold;
+  }
+  &__score {
+    position: relative;
+  }
+  &__icon {
+    width: 7.8125rem;
+    height: 7.8125rem;
+    padding: 1.125rem;
+    @include brad(50%);
+    background-color: #000;
+    @include flex(row, center, center);
+    margin-bottom: 1.25rem;
+  }
+  &__photo {
+    width: 6rem;
+    height: 6rem;
+    @include brad(50%);
+  }
+}
+
+/* Map */
+.map {
+  &__container {
+    @include flex(row, center, center);
+  }
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 3.125rem;
+    font-weight: 700;
+  }
+  &__uz {
+    margin-top: 3.125rem;
+    max-width: 75rem;
+    width: 100%;
+    min-height: 48.75rem;
+  }
+  &__province {
+    fill: rgb(255, 255, 255, 0.5);
+    stroke: rgb(255, 255, 255, 0.5);
+    stroke-width: 0.0938rem;
+  }
+  &__tooltip {
+    max-width: 12.5rem;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    @include brad;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    pointer-events: none;
+    display: none;
+    z-index: 999;
+    white-space: normal;
+  }
+}
+
+/* .map__province-tashkent-region
+.map__province-khorezm
+.map__province-karakalpakstan
+.map__province-navoyi
+.map__province-tashkent
+.map__province-bukhara
+.map__province-samarkand
+.map__province-kashkadarya
+.map__province-fergana
+.map__province-andijan
+.map__province-namangan
+.map__province-surkhandarya
+.map__province-jizzak
+.map__province-syrdarya */
+
+/* Categories table */
+.categories {
+  &__table {
+    max-width: 75rem;
+    width: 100%;
+    min-height: 61.25rem;
+    background: rgb(128, 128, 128, 0.5);
+    @include brad;
+    margin-top: 3.125rem;
+    border-collapse: collapse;
+  }
+  &__row {
+    padding: 0.75rem;
+    text-align: center;
+    height: 4.875rem;
+    border-bottom: #ffffff solid 1px;
+    @include transition;
+  }
+  &__border-none {
+    border-bottom: none;
+  }
+  &__amount:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  &__title th {
+    height: 7.625rem;
+    padding: 2.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    border: none;
+  }
+  &__head tr {
+    min-height: 4.875rem;
+    font-size: 1.5625rem;
+    font-weight: 600;
+  }
+  &__rating {
+    font-weight: bold;
+    font-size: 1.3125rem;
+    &--aaa {
+      color: var(--color-aaa);
+    }
+    &--aa {
+      color: var(--color-aa);
+    }
+    &--a {
+      color: var(--color-a);
+    }
+    &--bbb {
+      color: var(--color-bbb);
+    }
+    &--bb {
+      color: var(--color-bb);
+    }
+    &--b {
+      color: var(--color-b);
+    }
+    &--ccc {
+      color: var(--color-ccc);
+    }
+    &--cc {
+      color: var(--color-cc);
+    }
+    &--c {
+      color: var(--color-c);
+    }
+    &--d {
+      color: var(--color-d);
+    }
+  }
+  &__progress-label{
+    font-weight: bold;
+  }
+  &__rating:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  &__progress {
+    @include flex(row, space-evenly, center);
+    padding: 0.75rem;
+    text-align: center;
+    height: 4.875rem;
+    @include transition;
+  }
+  &__progress:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  &__progress-bar {
+    width: 12.5rem;
+    height: 1.3125rem;
+    @include brad;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  &__progress-value {
+    height: 100%;
+    width: 0;
+    background: gray;
+    @include brad;
+    @include transition;
+  }
+}

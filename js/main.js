@@ -1,19 +1,19 @@
 /* Nav animation */
-const navItems = document.querySelectorAll(".nav__item");
-const navUnderline = document.querySelector(".nav__underline");
+const navItems = document.querySelectorAll(".header__nav-item");
+const navUnderline = document.querySelector(".header__nav-underline");
 
 function moveUnderline(el) {
   navUnderline.style.width = el.offsetWidth + "px";
   navUnderline.style.left = el.offsetLeft + "px";
 }
 
-const activeItem = document.querySelector(".nav__item--active");
+const activeItem = document.querySelector(".header__nav-item--active");
 if (activeItem) moveUnderline(activeItem);
 
 navItems.forEach((item) => {
   item.addEventListener("click", () => {
-    document.querySelector(".nav__item--active").classList.remove("nav__item--active");
-    item.classList.add("nav__item--active");
+    document.querySelector(".header__nav-item--active").classList.remove("header__nav-item--active");
+    item.classList.add("header__nav-item--active");
     moveUnderline(item);
   });
 });
@@ -55,7 +55,6 @@ buttons.forEach((btn) => {
 const languageDropdown = document.querySelector(".language-dropdown");
 const languageBtn = languageDropdown.querySelector(".language-dropdown__btn");
 
-// dictionary for "Select language"
 const selectLanguageText = {
   ru: "Выберите язык",
   uz: "Tilni tanlang",
@@ -75,11 +74,9 @@ function getReadableLanguage(code) {
   }
 }
 
-// detect saved language or fallback
 let savedLang = localStorage.getItem("lang") || "ru";
 let currentLanguage = getReadableLanguage(savedLang);
 
-// show current language at startup
 languageBtn.textContent = currentLanguage;
 
 // toggle dropdown
@@ -104,12 +101,11 @@ langMenu.addEventListener("click", (e) => {
     savedLang = li.dataset.lang;
     currentLanguage = getReadableLanguage(savedLang);
     localStorage.setItem("lang", savedLang);
-
-    // always show language name after selection
+   
     languageBtn.textContent = currentLanguage;
 
     languageDropdown.classList.remove("active");
-    changeLang(savedLang); // comes from local.js
+    changeLang(savedLang); 
   }
 });
 

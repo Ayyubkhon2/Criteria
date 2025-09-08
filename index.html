@@ -24,85 +24,73 @@
     <div class="layer-blur">
       <!-- Header -->
       <header class="header">
-        <div class="header__container">
-          <div class="header__left">
-            <div class="header__logo logo">
-              <img src="assets/logo-img.png" alt="" class="logo__img" />
-              <div class="logo__text-wrap">
-                <p class="logo__bold">NAPP</p>
-                <p class="logo__subtitle">NATIONAL AGENCY</p>
-                <p class="logo__description">OF PERSPECTIVE PROJECTS</p>
-              </div>
+      <div class="header__container">
+        <div class="header__left">
+          <div class="header__logo">
+            <img src="assets/logo-img.png" alt="" class="header__logo-img" />
+            <div class="header__logo-text--wrap">
+              <p class="header__logo-bold">NAPP</p>
+              <p class="header__logo-subtitle">NATIONAL AGENCY</p>
+              <p class="header__logo-description">OF PERSPECTIVE PROJECTS</p>
             </div>
-
-            <nav class="header__nav nav">
-              <ul class="nav__list">
-                <li class="nav__item nav__item--active">
-                  <a href="index.html"><span data-i18n="nav1">Главная</span></a>
-                </li>
-                <li class="nav__item">
-                  <a href="rating.html"><span data-i18n="nav2">Рейтинг</span></a>
-                </li>
-                <li class="nav__item">
-                  <a href="criteria.html"><span data-i18n="nav3">Критерии</span></a>
-                </li>
-
-                <div class="nav__underline"></div>
-              </ul>
-            </nav>
           </div>
 
-          <div class="header__right">
-            <div class="header__language language-dropdown">
-              <button class="language-dropdown__btn">
-                <span class="language-dropdown__current">Русский</span>
-              </button>
-              <ul class="language-dropdown__menu">
-                <li class="language-dropdown__option" data-lang="ru">
-                  <img
-                    class="language-dropdown__flag"
-                    src="assets/ru.png"
-                    alt="RU"
-                  />
-                  Русский
-                </li>
-                <li class="language-dropdown__option" data-lang="uz">
-                  <img
-                    class="language-dropdown__flag"
-                    src="assets/uz.png"
-                    alt="UZ"
-                  />
-                  Oʻzbekcha
-                </li>
-                <li class="language-dropdown__option" data-lang="en">
-                  <img
-                    class="language-dropdown__flag"
-                    src="assets/en.png"
-                    alt="EN"
-                  />
-                  English
-                </li>
-              </ul>
-            </div>
+          <nav class="header__nav">
+            <ul class="header__nav-list">
+              <li class="header__nav-item header__nav-item--active">
+                <a href="index.html"><span data-i18n="nav1">Главная</span></a>
+              </li>
+              <li class="header__nav-item">
+                <a href="rating.html"><span data-i18n="nav2">Рейтинг</span></a>
+              </li>
+              <li class="header__nav-item">
+                <a href="criteria.html"><span data-i18n="nav3">Критерии</span></a>
+              </li>
 
-            <div class="header__login login magnetic-button">Войти</div>
+              <div class="header__nav-underline"></div>
+            </ul>
+          </nav>
+        </div>
 
-            <!-- Burger -->
-            <div class="burger" id="burger">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+        <div class="header__right">
+          <div class="header__language language-dropdown">
+            <button class="language-dropdown__btn">
+              <span class="language-dropdown__current">Русский</span>
+            </button>
+            <ul class="language-dropdown__menu">
+              <li class="language-dropdown__option" data-lang="ru">
+                <img class="language-dropdown__flag" src="assets/ru.png" alt="RU" />
+                Русский
+              </li>
+              <li class="language-dropdown__option" data-lang="uz">
+                <img class="language-dropdown__flag" src="assets/uz.png" alt="UZ" />
+                Oʻzbekcha
+              </li>
+              <li class="language-dropdown__option" data-lang="en">
+                <img class="language-dropdown__flag" src="assets/en.png" alt="EN" />
+                English
+              </li>
+            </ul>
+          </div>
 
-            <!-- Dropdown -->
-            <div class="dropdown" id="dropdown">
-              <a href="index.html" data-i18n="nav1"></a>
-              <a href="rating.html" data-i18n="nav2"></a>
-              <a href="criteria.html" data-i18n="nav3"></a>
-            </div>
+          <div class="header__login magnetic-button">Войти</div>
+
+          <!-- Burger -->
+          <div class="burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <!-- Dropdown -->
+          <div class="dropdown" id="dropdown">
+            <a href="index.html" data-i18n="nav1"></a>
+            <a href="rating.html" data-i18n="nav2"></a>
+            <a href="criteria.html" data-i18n="nav3"></a>
           </div>
         </div>
-      </header>
+      </div>
+    </header>
 
       <!-- Hero -->
       <section class="hero">
@@ -131,11 +119,7 @@
 
         <!-- Quarter buttons -->
         <div class="chart__quarters">
-          <button
-            class="chart__quarter-btn chart__quarter-btn--active"
-            data-quarter="1"
-            data-i18n="q1"
-          >
+          <button class="chart__quarter-btn chart__quarter-btn--active" data-quarter="1" data-i18n="q1">
             1 квартал
           </button>
           <button class="chart__quarter-btn" data-quarter="2" data-i18n="q2">
@@ -150,84 +134,66 @@
         </div>
 
         <div class="chart__content">
-          <div class="chart__legend legend">
-            <span class="legend__label" data-offset="30">A</span>
-            <span class="legend__label" data-offset="35">B</span>
-            <span class="legend__label" data-offset="45">C</span>
-            <span class="legend__label" data-offset="15">D</span>
+          <div class="chart__legend">
+            <span class="chart__legend-label">A</span>
+            <span class="chart__legend-label">B</span>
+            <span class="chart__legend-label">C</span> 
+            <span class="chart__legend-label">D</span>
           </div>
 
-          <div class="chart__bars bars">
+          <div class="chart__bars">
             <!-- Category A -->
-            <div class="bar-group" data-group="A">
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
+            <div class="chart__bar-group" data-group="A">
+              <div class="chart__bar"></div>
+              <div class="chart__bar"></div>
+              <div class="chart__bar"></div>
             </div>
 
             <!-- Category B -->
-            <div class="bar-group" data-group="B">
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
+            <div class="chart__bar-group" data-group="B">
+              <div class="chart__bar"></div>
+              <div class="chart__bar"></div>
+              <div class="chart__bar"></div>
             </div>
 
             <!-- Category C -->
-            <div class="bar-group" data-group="C">
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
+            <div class="chart__bar-group" data-group="C">
+              <div class="chart__bar"></div>
+              <div class="chart__bar"></div>
+              <div class="chart__bar"></div>
             </div>
 
             <!-- Category D -->
-            <div class="bar-group" data-group="D">
-              <div class="bar"></div>
+            <div class="chart__bar-group" data-group="D">
+              <div class="chart__bar"></div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Tooltip -->
-      <div class="chart__tooltip tooltip" id="tooltip"></div>
+      <div class="chart__tooltip" id="tooltip"></div>
 
       <!-- Criteria Section -->
       <section class="criteria">
         <p class="criteria__title" data-i18n="rating">Что оцениваем</p>
         <div class="criteria__group">
           <div class="criteria__item reveal reveal-bottom">
-            <div class="criteria__icon">
-              <img
-                src="assets/finance.png"
-                alt="Финансово-экономические показатели"
-                class="icon"
-              />
-            </div>
+              <img class="criteria__icon" src="assets/finance.png"/>
             <p class="criteria__text" data-i18n="finance">
               Финансово-экономические показатели
             </p>
           </div>
 
           <div class="criteria__item reveal reveal-bottom">
-            <div class="criteria__icon">
-              <img
-                src="assets/Corporate.png"
-                alt="Корпоративное управление"
-                class="icon"
-              />
-            </div>
+              <img class="criteria__icon" src="assets/Corporate.png"/>
             <p class="criteria__text" data-i18n="corporate">
               Корпоративное управление
             </p>
           </div>
 
           <div class="criteria__item reveal reveal-bottom">
-            <div class="criteria__icon">
-              <img
-                src="assets/Investment.png"
-                alt="Инвестиционная привлекательность"
-                class="icon"
-              />
-            </div>
+              <img class="criteria__icon" src="assets/Investment.png"/>
             <p class="criteria__text" data-i18n="investment">
               Инвестиционная привлекательность
             </p>
@@ -240,7 +206,7 @@
         <div class="rating-table__head">
           <div class="rating-table__row--header">
             <div
-              class="rating-table__cell--header cell-category"
+              class="rating-table__cell--header rating-table__cell--category"
               data-i18n="category"
             >
               Категория надежности
@@ -248,19 +214,19 @@
 
             <div class="rating-table__cell--group">
               <div
-                class="rating-table__cell--header cell-score"
+                class="rating-table__cell--header rating-table__cell--score"
                 data-i18n="score"
               >
                 Рейтинговая оценка
               </div>
               <div
-                class="rating-table__cell--header cell-level"
+                class="rating-table__cell--header rating-table__cell--level"
                 data-i18n="level"
               >
                 Уровень надежности
               </div>
               <div
-                class="rating-table__cell--header cell-points"
+                class="rating-table__cell--header rating-table__cell--points"
                 data-i18n="points"
               >
                 Баллы
@@ -271,11 +237,11 @@
 
         <div class="rating-table__body">
           <div class="rating-table__row">
-            <div class="rating-table__category score--aa">A</div>
+            <div class="rating-table__category" data-rating="AA">A</div>
 
             <div class="rating-table__main-group">
               <div class="rating-table__group">
-                <div class="rating-table__score score--aaa">AAA</div>
+                <div class="rating-table__score" data-rating="AAA">AAA</div>
                 <div class="rating-table__level" data-i18n="level_a1">
                   Уровень 1 - высокий
                 </div>
@@ -284,7 +250,7 @@
                 </div>
               </div>
               <div class="rating-table__group">
-                <div class="rating-table__score score--aa">AA</div>
+                <div class="rating-table__score" data-rating="AA">AA</div>
                 <div class="rating-table__level" data-i18n="level_a2">
                   Уровень 2 - высокий
                 </div>
@@ -293,7 +259,7 @@
                 </div>
               </div>
               <div class="rating-table__group">
-                <div class="rating-table__score score--a">A</div>
+                <div class="rating-table__score" data-rating="A">A</div>
                 <div class="rating-table__level" data-i18n="level_a3">
                   Уровень 3 - высокий
                 </div>
@@ -305,11 +271,11 @@
           </div>
 
           <div class="rating-table__row">
-            <div class="rating-table__category score--bb">B</div>
+            <div class="rating-table__category" data-rating="BB">B</div>
 
             <div class="rating-table__main-group">
               <div class="rating-table__group">
-                <div class="rating-table__score score--bbb">BBB</div>
+                <div class="rating-table__score" data-rating="BBB">BBB</div>
                 <div class="rating-table__level" data-i18n="level_b1">
                   Уровень 1 - средний
                 </div>
@@ -318,7 +284,7 @@
                 </div>
               </div>
               <div class="rating-table__group">
-                <div class="rating-table__score score--bb">BB</div>
+                <div class="rating-table__score" data-rating="BB">BB</div>
                 <div class="rating-table__level" data-i18n="level_b2">
                   Уровень 2 - средний
                 </div>
@@ -327,7 +293,7 @@
                 </div>
               </div>
               <div class="rating-table__group">
-                <div class="rating-table__score score--b">B</div>
+                <div class="rating-table__score" data-rating="B">B</div>
                 <div class="rating-table__level" data-i18n="level_b3">
                   Уровень 3 - средний
                 </div>
@@ -339,11 +305,11 @@
           </div>
 
           <div class="rating-table__row">
-            <div class="rating-table__category score--cc">C</div>
+            <div class="rating-table__category" data-rating="CC">C</div>
 
             <div class="rating-table__main-group">
               <div class="rating-table__group">
-                <div class="rating-table__score score--ccc">CCC</div>
+                <div class="rating-table__score" data-rating="CCC">CCC</div>
                 <div class="rating-table__level" data-i18n="level_c1">
                   Уровень 1 - удовлетворительный
                 </div>
@@ -352,7 +318,7 @@
                 </div>
               </div>
               <div class="rating-table__group">
-                <div class="rating-table__score score--cc">CC</div>
+                <div class="rating-table__score" data-rating="CC">CC</div>
                 <div class="rating-table__level" data-i18n="level_c2">
                   Уровень 2 - удовлетворительный
                 </div>
@@ -361,7 +327,7 @@
                 </div>
               </div>
               <div class="rating-table__group">
-                <div class="rating-table__score score--c">C</div>
+                <div class="rating-table__score" data-rating="C">C</div>
                 <div class="rating-table__level" data-i18n="level_c3">
                   Уровень 3 - удовлетворительный
                 </div>
@@ -373,9 +339,9 @@
           </div>
 
           <div class="rating-table__row">
-            <div class="rating-table__category category-small score--d">D</div>
-            <div class="rating-table__group group-small">
-              <div class="rating-table__score score--d">D</div>
+            <div class="rating-table__category--small" data-rating="D">D</div>
+            <div class="rating-table__group--small">
+              <div class="rating-table__score" data-rating="D">D</div>
               <div class="rating-table__level" data-i18n="level_d">Низкий</div>
               <div class="rating-table__points" data-i18n="points_d">
                 менее 20 баллов
