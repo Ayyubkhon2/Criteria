@@ -5,22 +5,22 @@ body {
 
   font-family: mulish;
   color: #ffffff;
-  width: 100%;   
-  min-height: 100vh;  
-  height: 100%; 
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
 
   backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;    
-  transform: none !important;      
-} 
+  -webkit-backdrop-filter: none !important;
+  transform: none !important;  
+}
 
-input, 
+input,   
 textarea, 
 button, 
-select {
-  font-family: inherit; 
+select { 
+  font-family: inherit;  
 }
 
 @mixin transition($duration: 0.3s, $property: all, $timing: ease-out) {
@@ -32,7 +32,7 @@ select {
   justify-content: $justify;
   align-items: $align;
 }
-@mixin brad($radius: 1rem) {
+@mixin brad($radius: 1rem) { 
   border-radius: $radius;
 }
 @mixin bg($color: rgba(255, 255, 255, 0.2)) {
@@ -45,11 +45,7 @@ select {
 }
 
 .container {
-  width: clamp(
-    320px,
-    90%,
-    1200px
-  ); 
+  width: clamp(320px, 90%, 1200px);
   margin-inline: auto;
   box-sizing: border-box;
 }
@@ -103,14 +99,14 @@ select {
 .table {
   margin-top: 4rem;
   border-collapse: collapse;
-   table-layout: fixed;  
-  min-width: 600px;      
-  max-width: 100%;       
-  width: 100%; 
+  table-layout: fixed;
+  min-width: 600px;
+  width: max-content;
+  max-width: none;
   &-wrapper {
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; 
+    -webkit-overflow-scrolling: touch;
   }
   &__row {
     background: rgba(128, 128, 128, 0.5);
@@ -119,6 +115,21 @@ select {
       border-bottom: none;
     }
   }
+  & th:first-child,
+  & td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    // background: none;
+    &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #808080; 
+    z-index: -1;
+  }
+  }
+
   &__head th {
     background: #1a4c80;
     height: clamp(4rem, 2vw, 6rem);
@@ -128,8 +139,8 @@ select {
     padding: clamp(10px, 2vw, 20px) clamp(5px, 2vw, 10px);
     white-space: normal;
     word-break: break-word;
-     overflow: hidden;
-  text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__body td {
     height: auto;
@@ -139,8 +150,8 @@ select {
     word-break: break-word;
     text-align: center;
     vertical-align: middle;
-     overflow: hidden;
-  text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__criteria {
     width: 11.0625rem;

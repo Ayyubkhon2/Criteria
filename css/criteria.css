@@ -80,8 +80,9 @@ select {
   border-collapse: collapse;
   table-layout: fixed;
   min-width: 600px;
-  max-width: 100%;
-  width: 100%;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: none;
 }
 .table-wrapper {
   width: 100%;
@@ -94,6 +95,18 @@ select {
 }
 .table__row:last-child {
   border-bottom: none;
+}
+.table th:first-child, .table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+.table th:first-child::before, .table td:first-child::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #808080;
+  z-index: -1;
 }
 .table__head th {
   background: #1a4c80;
