@@ -2197,10 +2197,11 @@ function updateChart(year, quarter) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const defaultYear = Object.keys(chartData)[0];
-  const defaultQuarter = Object.keys(chartData[defaultYear])[0];
+  const defaultYear = String(currentYear);      // use the currentYear you defined above
+  const defaultQuarter = currentQuarter;       // use the currentQuarter you defined above
   updateChart(defaultYear, defaultQuarter);
 });
+
 
 /* Tooltip */
 chartBars.forEach((bar) => {
@@ -2210,10 +2211,11 @@ chartBars.forEach((bar) => {
     chartTooltip.style.background = getComputedStyle(bar).backgroundColor;
   });
 
-  bar.addEventListener("mousemove", (e) => {
-    chartTooltip.style.left = e.pageX + 15 + "px";
-    chartTooltip.style.top = e.pageY - 10 + "px";
-  });
+bar.addEventListener("mousemove", (e) => {
+  chartTooltip.style.left = e.clientX + 15 + "px";
+  chartTooltip.style.top = e.clientY - 10 + "px";
+});
+
 
   bar.addEventListener("mouseleave", () => {
     chartTooltip.classList.remove("visible");
@@ -2290,7 +2292,7 @@ document
 /* Translation */
 i18next.init(
   {
-    lng: "ru",
+    lng: savedLang, 
     debug: true,
     interpolation: { escapeValue: false },
     resources: {
@@ -2446,7 +2448,6 @@ function changeLang(lang) {
     updateContent();
     updateChart(currentYear, currentQuarter);
 
-    // stop old typewriter before starting new one
     if (typewriterTimer) clearTimeout(typewriterTimer);
     startTypewriter();
   });

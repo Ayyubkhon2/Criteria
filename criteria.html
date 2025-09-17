@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/criteria.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header__container">
+        <div class="header__left">
+          <a href="index.html" class="header__logo">
+            <img src="assets/logo-img.png" alt="" class="header__logo-img" />
+            <div class="header__logo-text--wrap">
+              <p class="header__logo-bold">NAPP</p>
+              <p class="header__logo-subtitle">NATIONAL AGENCY</p>
+              <p class="header__logo-description">OF PERSPECTIVE PROJECTS</p>
+            </div>
+          </a>
+
+          <nav class="header__nav">
+            <ul class="header__nav-list">
+              <li class="header__nav-item">
+                <a href="index.html"><span data-i18n="nav1"></span></a>
+              </li>
+              <li class="header__nav-item">
+                <a href="rating.html"><span data-i18n="nav2"></span></a>
+              </li>
+              <li class="header__nav-item header__nav-item--active">
+                <a href="criteria.html"><span data-i18n="nav3"></span></a>
+              </li>
+
+              <div class="header__nav-underline"></div>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="header__right">
+          <div class="header__language language-dropdown">
+            <button class="language-dropdown__btn">
+              <span class="language-dropdown__current">Русский</span>
+            </button>
+            <ul class="language-dropdown__menu">
+              <li class="language-dropdown__option" data-lang="ru">
+                <img
+                  class="language-dropdown__flag"
+                  src="assets/ru.png"
+                  alt="RU"
+                />
+                Русский
+              </li>
+              <li class="language-dropdown__option" data-lang="uz">
+                <img
+                  class="language-dropdown__flag"
+                  src="assets/uz.png"
+                  alt="UZ"
+                />
+                Oʻzbekcha
+              </li>
+              <li class="language-dropdown__option" data-lang="en">
+                <img
+                  class="language-dropdown__flag"
+                  src="assets/en.png"
+                  alt="EN"
+                />
+                English
+              </li>
+            </ul>
+          </div>
+
+          <div class="header__login magnetic-button">Войти</div>
+
+          <!-- Burger -->
+          <div class="burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <!-- Dropdown -->
+          <div class="dropdown" id="dropdown">
+            <a href="index.html" data-i18n="nav1"></a>
+            <a href="rating.html" data-i18n="nav2"></a>
+            <a href="criteria.html" data-i18n="nav3"></a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="layer-blur">
+      <div class="layout">
+        <!-- Variant switcher -->
+        <div class="switcher">
+          <button
+            data-variant="finance"
+            class="switcher__btn switcher__btn--active"
+          >
+            <img src="assets/finance.png" class="switcher__icon" />
+            <span data-i18n="switchet1r1"></span>
+          </button>
+          <button data-variant="corporate" class="switcher__btn">
+            <img src="assets/Corporate.png" class="switcher__icon" />
+            <span data-i18n="switchet1r2"></span>
+          </button>
+          <button data-variant="investment" class="switcher__btn">
+            <img src="assets/Investment.png" class="switcher__icon" />
+            <span data-i18n="switchet1r3"></span>
+          </button>
+        </div>
+
+        <!-- Variants -->
+        <div id="finance" class="variant variant--active">
+<div class="table-wrapper">
+          <table class="table">
+            <thead class="table__head">
+              <tr class="table__row">
+                <th class="table__criteria" data-i18n="h1"></th>
+                <th class="table__method" data-i18n="h2"></th>
+                <th class="table__formula" data-i18n="h3"></th>
+                <th class="table__information" data-i18n="h4"></th>
+                <th class="table__data-period" data-i18n="h5"></th>
+                <th class="table__mark-period" data-i18n="h6"></th>
+                <th class="table__score" data-i18n="h7"></th>
+                <th class="table__access" data-i18n="h8"></th>
+              </tr>
+            </thead>
+            <tbody class="table__body">
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t1r1b1"></td>
+                <td class="table__method" data-i18n="t1r1b2"></td>
+                <td class="table__formula" data-i18n="t1r1b3"></td>
+                <td class="table__information" data-i18n="t1r1b4"></td>
+                <td class="table__data-period" data-i18n="t1r1b5"></td>
+                <td class="table__mark-period" data-i18n="t1r1b6"></td>
+                <td class="table__score" data-i18n="t1r1b7"></td>
+                <td class="table__access" data-i18n="t1r1b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t1r2b1"></td>
+                <td class="table__method" data-i18n="t1r2b2"></td>
+                <td class="table__formula" data-i18n="t1r2b3"></td>
+                <td class="table__information" data-i18n="t1r2b4"></td>
+                <td class="table__data-period" data-i18n="t1r2b5"></td>
+                <td class="table__mark-period" data-i18n="t1r2b6"></td>
+                <td class="table__score" data-i18n="t1r2b7"></td>
+                <td class="table__access" data-i18n="t1r2b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t1r3b1"></td>
+                <td class="table__method" data-i18n="t1r3b2"></td>
+                <td class="table__formula" data-i18n="t1r3b3"></td>
+                <td class="table__information" data-i18n="t1r3b4"></td>
+                <td class="table__data-period" data-i18n="t1r3b5"></td>
+                <td class="table__mark-period" data-i18n="t1r3b6"></td>
+                <td class="table__score" data-i18n="t1r3b7"></td>
+                <td class="table__access" data-i18n="t1r3b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t1r4b1"></td>
+                <td class="table__method" data-i18n="t1r4b2"></td>
+                <td class="table__formula" data-i18n="t1r4b3"></td>
+                <td class="table__information" data-i18n="t1r4b4"></td>
+                <td class="table__data-period" data-i18n="t1r4b5"></td>
+                <td class="table__mark-period" data-i18n="t1r4b6"></td>
+                <td class="table__score" data-i18n="t1r4b7"></td>
+                <td class="table__access" data-i18n="t1r4b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t1r5b1"></td>
+                <td class="table__method" data-i18n="t1r5b2"></td>
+                <td class="table__formula" data-i18n="t1r5b3"></td>
+                <td class="table__information" data-i18n="t1r5b4"></td>
+                <td class="table__data-period" data-i18n="t1r5b5"></td>
+                <td class="table__mark-period" data-i18n="t1r5b6"></td>
+                <td class="table__score" data-i18n="t1r5b7"></td>
+                <td class="table__access" data-i18n="t1r5b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t1r6b1"></td>
+                <td class="table__method" data-i18n="t1r6b2"></td>
+                <td class="table__formula" data-i18n="t1r6b3"></td>
+                <td class="table__information" data-i18n="t1r6b4"></td>
+                <td class="table__data-period" data-i18n="t1r6b5"></td>
+                <td class="table__mark-period" data-i18n="t1r6b6"></td>
+                <td class="table__score" data-i18n="t1r6b7"></td>
+                <td class="table__access" data-i18n="t1r6b8"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+        <div id="corporate" class="variant">
+          <div class="table-wrapper">
+          <table class="table">
+            <thead class="table__head">
+              <tr class="table__row">
+                <th class="table__criteria" data-i18n="h1"></th>
+                <th class="table__method" data-i18n="h2"></th>
+                <th class="table__formula" data-i18n="h3"></th>
+                <th class="table__information" data-i18n="h4"></th>
+                <th class="table__data-period" data-i18n="h5"></th>
+                <th class="table__mark-period" data-i18n="h6"></th>
+                <th class="table__score" data-i18n="h7"></th>
+                <th class="table__access" data-i18n="h8"></th>
+              </tr>
+            </thead>
+            <tbody class="table__body">
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r1b1"></td>
+                <td class="table__method" data-i18n="t2r1b2"></td>
+                <td class="table__formula" data-i18n="t2r1b3"></td>
+                <td class="table__information" data-i18n="t2r1b4"></td>
+                <td class="table__data-period" data-i18n="t1r1b5"></td>
+                <td class="table__mark-period" data-i18n="t2r1b6"></td>
+                <td class="table__score" data-i18n="t2r1b7"></td>
+                <td class="table__access" data-i18n="t2r1b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r2b1"></td>
+                <td class="table__method" data-i18n="t2r2b2"></td>
+                <td class="table__formula" data-i18n="t2r2b3"></td>
+                <td class="table__information" data-i18n="t2r2b4"></td>
+                <td class="table__data-period" data-i18n="t2r2b5"></td>
+                <td class="table__mark-period" data-i18n="t2r2b6"></td>
+                <td class="table__score" data-i18n="t2r2b7"></td>
+                <td class="table__access" data-i18n="t2r2b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r3b1"></td>
+                <td class="table__method" data-i18n="t2r3b2"></td>
+                <td class="table__formula" data-i18n="t2r3b3"></td>
+                <td class="table__information" data-i18n="t2r3b4"></td>
+                <td class="table__data-period" data-i18n="t2r3b5"></td>
+                <td class="table__mark-period" data-i18n="t2r3b6"></td>
+                <td class="table__score" data-i18n="t2r3b7"></td>
+                <td class="table__access" data-i18n="t2r3b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r4b1"></td>
+                <td class="table__method" data-i18n="t2r4b2"></td>
+                <td class="table__formula" data-i18n="t2r4b3"></td>
+                <td class="table__information" data-i18n="t2r4b4"></td>
+                <td class="table__data-period" data-i18n="t2r4b5"></td>
+                <td class="table__mark-period" data-i18n="t2r4b6"></td>
+                <td class="table__score" data-i18n="t2r4b7"></td>
+                <td class="table__access" data-i18n="t2r4b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r5b1"></td>
+                <td class="table__method" data-i18n="t2r5b2"></td>
+                <td class="table__formula" data-i18n="t2r5b3"></td>
+                <td class="table__information" data-i18n="t2r5b4"></td>
+                <td class="table__data-period" data-i18n="t2r5b5"></td>
+                <td class="table__mark-period" data-i18n="t2r5b6"></td>
+                <td class="table__score" data-i18n="t2r5b7"></td>
+                <td class="table__access" data-i18n="t2r5b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r6b1"></td>
+                <td class="table__method" data-i18n="t2r6b2"></td>
+                <td class="table__formula" data-i18n="t2r6b3"></td>
+                <td class="table__information" data-i18n="t2r6b4"></td>
+                <td class="table__data-period" data-i18n="t2r6b5"></td>
+                <td class="table__mark-period" data-i18n="t2r6b6"></td>
+                <td class="table__score" data-i18n="t2r6b7"></td>
+                <td class="table__access" data-i18n="t2r6b8"></td>
+              </tr>
+               <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r7b1"></td>
+                <td class="table__method" data-i18n="t2r7b2"></td>
+                <td class="table__formula" data-i18n="t2r7b3"></td>
+                <td class="table__information" data-i18n="t2r7b4"></td>
+                <td class="table__data-period" data-i18n="t2r7b5"></td>
+                <td class="table__mark-period" data-i18n="t2r7b6"></td>
+                <td class="table__score" data-i18n="t2r7b7"></td>
+                <td class="table__access" data-i18n="t2r7b8"></td>
+              </tr>
+                      <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r8b1"></td>
+                <td class="table__method" data-i18n="t2r8b2"></td>
+                <td class="table__formula" data-i18n="t2r8b3"></td>
+                <td class="table__information" data-i18n="t2r8b4"></td>
+                <td class="table__data-period" data-i18n="t2r8b5"></td>
+                <td class="table__mark-period" data-i18n="t2r8b6"></td>
+                <td class="table__score" data-i18n="t2r8b7"></td>
+                <td class="table__access" data-i18n="t2r8b8"></td>
+              </tr>
+                      <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r9b1"></td>
+                <td class="table__method" data-i18n="t2r9b2"></td>
+                <td class="table__formula" data-i18n="t2r9b3"></td>
+                <td class="table__information" data-i18n="t2r9b4"></td>
+                <td class="table__data-period" data-i18n="t2r9b5"></td>
+                <td class="table__mark-period" data-i18n="t2r9b6"></td>
+                <td class="table__score" data-i18n="t2r9b7"></td>
+                <td class="table__access" data-i18n="t2r9b8"></td>
+              </tr>
+                      <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r10b1"></td>
+                <td class="table__method" data-i18n="t2r10b2"></td>
+                <td class="table__formula" data-i18n="t2r10b3"></td>
+                <td class="table__information" data-i18n="t2r10b4"></td>
+                <td class="table__data-period" data-i18n="t2r10b5"></td>
+                <td class="table__mark-period" data-i18n="t2r10b6"></td>
+                <td class="table__score" data-i18n="t2r10b7"></td>
+                <td class="table__access" data-i18n="t2r10b8"></td>
+              </tr>
+                      <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r11b1"></td>
+                <td class="table__method" data-i18n="t2r11b2"></td>
+                <td class="table__formula" data-i18n="t2r11b3"></td>
+                <td class="table__information" data-i18n="t2r11b4"></td>
+                <td class="table__data-period" data-i18n="t2r11b5"></td>
+                <td class="table__mark-period" data-i18n="t2r11b6"></td>
+                <td class="table__score" data-i18n="t2r11b7"></td>
+                <td class="table__access" data-i18n="t2r11b8"></td>
+              </tr>
+                      <tr class="table__row">
+                <td class="table__criteria" data-i18n="t2r12b1"></td>
+                <td class="table__method" data-i18n="t2r12b2"></td>
+                <td class="table__formula" data-i18n="t2r12b3"></td>
+                <td class="table__information" data-i18n="t2r12b4"></td>
+                <td class="table__data-period" data-i18n="t2r12b5"></td>
+                <td class="table__mark-period" data-i18n="t2r12b6"></td>
+                <td class="table__score" data-i18n="t2r12b7"></td>
+                <td class="table__access" data-i18n="t2r12b8"></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div id="investment" class="variant">
+         <div class="table-wrapper">
+          <table class="table">
+            <thead class="table__head">
+              <tr class="table__row">
+                <th class="table__criteria" data-i18n="h1"></th>
+                <th class="table__method" data-i18n="h2"></th>
+                <th class="table__formula" data-i18n="h3"></th>
+                <th class="table__information" data-i18n="h4"></th>
+                <th class="table__data-period" data-i18n="h5"></th>
+                <th class="table__mark-period" data-i18n="h6"></th>
+                <th class="table__score" data-i18n="h7"></th>
+                <th class="table__access" data-i18n="h8"></th>
+              </tr>
+            </thead>
+            <tbody class="table__body">
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t3r1b1"></td>
+                <td class="table__method" data-i18n="t3r1b2"></td>
+                <td class="table__formula" data-i18n="t3r1b3"></td>
+                <td class="table__information" data-i18n="t3r1b4"></td>
+                <td class="table__data-period" data-i18n="t3r1b5"></td>
+                <td class="table__mark-period" data-i18n="t3r1b6"></td>
+                <td class="table__score" data-i18n="t3r1b7"></td>
+                <td class="table__access" data-i18n="t3r1b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t3r2b1"></td>
+                <td class="table__method" data-i18n="t3r2b2"></td>
+                <td class="table__formula" data-i18n="t3r2b3"></td>
+                <td class="table__information" data-i18n="t3r2b4"></td>
+                <td class="table__data-period" data-i18n="t3r2b5"></td>
+                <td class="table__mark-period" data-i18n="t3r2b6"></td>
+                <td class="table__score" data-i18n="t3r2b7"></td>
+                <td class="table__access" data-i18n="t3r2b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t3r3b1"></td>
+                <td class="table__method" data-i18n="t3r3b2"></td>
+                <td class="table__formula" data-i18n="t3r3b3"></td>
+                <td class="table__information" data-i18n="t3r3b4"></td>
+                <td class="table__data-period" data-i18n="t3r3b5"></td>
+                <td class="table__mark-period" data-i18n="t3r3b6"></td>
+                <td class="table__score" data-i18n="t3r3b7"></td>
+                <td class="table__access" data-i18n="t3r3b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t3r4b1"></td>
+                <td class="table__method" data-i18n="t3r4b2"></td>
+                <td class="table__formula" data-i18n="t3r4b3"></td>
+                <td class="table__information" data-i18n="t3r4b4"></td>
+                <td class="table__data-period" data-i18n="t3r4b5"></td>
+                <td class="table__mark-period" data-i18n="t3r4b6"></td>
+                <td class="table__score" data-i18n="t3r4b7"></td>
+                <td class="table__access" data-i18n="t3r4b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t3r5b1"></td>
+                <td class="table__method" data-i18n="t3r5b2"></td>
+                <td class="table__formula" data-i18n="t3r5b3"></td>
+                <td class="table__information" data-i18n="t3r5b4"></td>
+                <td class="table__data-period" data-i18n="t3r5b5"></td>
+                <td class="table__mark-period" data-i18n="t3r5b6"></td>
+                <td class="table__score" data-i18n="t3r5b7"></td>
+                <td class="table__access" data-i18n="t3r5b8"></td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__criteria" data-i18n="t3r6b1"></td>
+                <td class="table__method" data-i18n="t3r6b2"></td>
+                <td class="table__formula" data-i18n="t3r6b3"></td>
+                <td class="table__information" data-i18n="t3r6b4"></td>
+                <td class="table__data-period" data-i18n="t3r6b5"></td>
+                <td class="table__mark-period" data-i18n="t3r6b6"></td>
+                <td class="table__score" data-i18n="t3r6b7"></td>
+                <td class="table__access" data-i18n="t3r6b8"></td>
+              </tr>
+            </tbody>
+          </table>
+           </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p data-i18n="footer"></p>
+      </footer>
+    </div>
+
+    <script src="https://unpkg.com/i18next@23.7.6/dist/umd/i18next.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/criteria.js"></script>
+  </body>
+</html>

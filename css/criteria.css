@@ -1,0 +1,150 @@
+body {
+  background: url("../assets/criteria-bg.png") no-repeat center center fixed;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-family: mulish;
+  color: #ffffff;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transform: none !important;
+}
+
+input,
+textarea,
+button,
+select {
+  font-family: inherit;
+}
+
+.container, .layout {
+  width: clamp(320px, 90%, 1200px);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+.layout {
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 4rem auto;
+  overflow-x: auto;
+  border-radius: 1rem;
+}
+
+.switcher {
+  width: 100%;
+  min-height: 4.125rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1rem;
+}
+.switcher__btn {
+  width: 100%;
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  gap: clamp(0.25rem, 2vw, 0.625rem);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(0.6rem, 2vw, 1.25rem);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  padding: clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem);
+}
+.switcher__btn--active {
+  background: #1a4c80;
+}
+.switcher__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.variant {
+  display: none;
+}
+.variant--active {
+  display: block;
+}
+
+.table {
+  margin-top: 4rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+  min-width: 600px;
+  max-width: 100%;
+  width: 100%;
+}
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.table__row {
+  background: rgba(128, 128, 128, 0.5);
+  border-bottom: #ffffff solid 1px;
+}
+.table__row:last-child {
+  border-bottom: none;
+}
+.table__head th {
+  background: #1a4c80;
+  height: clamp(4rem, 2vw, 6rem);
+  font-size: clamp(0.6rem, 0.5vw + 0.75rem, 1rem);
+  text-align: center;
+  vertical-align: middle;
+  padding: clamp(10px, 2vw, 20px) clamp(5px, 2vw, 10px);
+  white-space: normal;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table__body td {
+  height: auto;
+  padding: clamp(10px, 1vw, 20px) clamp(5px, 2vw, 10px);
+  font-size: clamp(0.5rem, 0.5vw + 0.65rem, 0.9rem);
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table__criteria {
+  width: 11.0625rem;
+}
+.table__method {
+  width: 12.3125rem;
+}
+.table__formula {
+  width: 11.0625rem;
+}
+.table__information {
+  width: 10.125rem;
+}
+.table__data-period {
+  width: 8.5625rem;
+}
+.table__mark-period {
+  width: 8.5625rem;
+}
+.table__score {
+  width: 5.25rem;
+}
+.table__access {
+  width: 8rem;
+}
+
+@media (max-width: 768px) {
+  .table {
+    min-width: 500px;
+  }
+}/*# sourceMappingURL=criteria.css.map */

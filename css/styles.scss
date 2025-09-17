@@ -5,50 +5,66 @@
   box-sizing: border-box;
 }
 
-html {
+html { 
   height: 100%;
   margin: 0;
-  font-size: 16px;
+  font-size: 16px;  
 }
 
 @supports (background-attachment: fixed) {
   body {
     background-attachment: fixed;
-    background-position: center calc(50% + 0px);
-  }
+    background-position: center calc(50% + 0px); 
+  } 
 }
 
 :root {
   --color-aaa: #009a44;
   --color-aa: #91bd00;
   --color-a: #a5c91f;
-  --color-bbb: #d9b600;
+  --color-bbb: #d9b600; 
   --color-bb: #d9ce04;
   --color-b: #efe31e;
-  --color-ccc: #d96400;
+  --color-ccc: #d96400; 
   --color-cc: #d99c00;
   --color-c: #f0ae13;
   --color-d: #d92804;
-  --color-NAPP: #00345c;
-}
+  --color-NAPP: #00345c;    
+} 
 
 .layer-blur {
-  background-color: rgba(255, 255, 255, 0.15);
-  height: 100%;
+min-height: 100vh;
+  position: relative; 
+    display: flex;
+  flex-direction: column; 
+  gap: 4rem;     
+  align-items: center;  
+  margin-top: 4.75rem; 
 }
+
+.layer-blur::before { 
+  content: "";
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(255,255,255,0.15);
+  z-index: -1; 
+}
+
 
 /* Header */
 .header {
   width: 100%;
   background: var(--color-NAPP);
-  position: sticky;
+  position: fixed; 
   top: 0;
   z-index: 1000;
   display: flex;
   justify-content: center;
   &__container {
     max-width: 1200px;
-    min-height: 76px;
+    min-height: 4.75rem;
     padding: 1rem 0;
     width: 100%;
     display: flex;
@@ -80,12 +96,12 @@ html {
     height: 2rem;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
   }
   &__login:hover {
     background: #d0d1d7;
     transition: ease-out 0.3s;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
   }
   /* Logo */
   &__logo {
@@ -94,6 +110,8 @@ html {
     align-items: center;
     gap: 0.625rem;
     width: 9.8125rem;
+    text-decoration: none; 
+    transition: all 3s ease-out; 
   }
   &__logo-description {
     color: #ffffff;
@@ -131,8 +149,8 @@ html {
   &__logo-img:hover {
     background-color: rgba(28, 155, 102, 0.2);
     animation: pulse 1.5s ease-in-out infinite;
-    box-shadow: 0 0 30px rgba(28, 155, 102, 0.6),
-      0 0 60px rgba(28, 155, 102, 0.2);
+    box-shadow: 0 0 1.875rem rgba(28, 155, 102, 0.6),
+      0 0 3.75rem rgba(28, 155, 102, 0.2);
   }
   @keyframes spin {
     from {
@@ -193,16 +211,16 @@ html {
     height: 0.25rem;
     width: 33%;
     background: #ffffff;
-    transition: left 0.3s ease-out;
+    transition: left 0.3s ease-out, width 0.3s ease-out;
   }
 }
 
 /* Burger */
 .burger {
   cursor: pointer;
-  width: 30px;
+  width: 1.875rem;
   height: auto;
-  gap: 4px;
+  gap: .25rem;
   display: none;
   flex-direction: column;
   justify-content: space-between;
@@ -210,11 +228,11 @@ html {
   z-index: 1000;
   position: relative;
   & span {
-    height: 2px;
+    height: 0.125rem;
     width: 100%;
     background: #fff;
     color: var(--color-NAPP);
-    border-radius: 2px;
+    border-radius: 0.125rem;
     transition: all 0.3s ease;
     transform-origin: center;
   }
@@ -235,14 +253,14 @@ html {
   flex-direction: column;
   background: #ffffff;
   position: absolute;
-  top: 60px;
-  right: 20px;
-  border-radius: 8px;
+  top: 3.75rem; 
+  right: 1.25rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   min-width: 150px;
   & a {
     color: var(--color-NAPP);
-    padding: 12px 16px;
+    padding: 0.75rem 1rem;
     text-decoration: none;
     transition: background 0.3s;
   }
@@ -282,7 +300,7 @@ html {
     color: #ffffff;
     font-weight: 400;
     width: 8.125rem;
-    height: 2.1875rem;
+    height: 2.1875rem; 
     display: flex;
     justify-content: center;
     text-align: center;
@@ -339,11 +357,12 @@ html {
   color: var(--color-NAPP); 
   text-align: center;
   padding: 1.25rem;
-  font-size: 0.625rem;  
-  position: relative;  
-  bottom: 0;
-  width: 100%;  
+  font-size: 0.875rem; 
+ margin-top: auto;  
+  width: 100%;   
 }
+
+
 
 /* Reveal animation*/
 .reveal {
@@ -380,58 +399,45 @@ html {
 }
 
 
-
 /* ---------------- Responsive Breakpoints ---------------- */
-@media (max-width: 1250px) {
-  html {
-    font-size: 14px;
-  }
-  .header__container {
-    width: 90%;
-    min-height: auto;
-  }
+html {
+  font-size: clamp(10px, 1vw + 0.5rem, 16px); 
 }
 
-@media (max-width: 1150px) {
-  html {
-    font-size: 13px;
-  }
-  .header__container {
-    width: 75%;
-  }
+/* Header + Footer containers scale same as main sections */
+.header__container,
+.footer__container {
+  width: min(90%, 1200px);
+  min-height: auto;
 }
 
-@media (max-width: 1000px) {
-  html {
-    font-size: 11px;
-  }
-  .header__container {
-    width: 70%;
-  }
-}
-
-@media (max-width: 800px) {
-  html {
-    font-size: 10px;
-  }
+/* ---------------- Tablet (<= 768px) ---------------- */
+@media (max-width: 768px) {
   .header {
     &__login {
       padding: 0.375rem 0.75rem;
       font-size: 0.75rem;
       width: auto;
     }
-    &__nav {
-      display: none;
-    }
-    &__left {
-      justify-content: start;
-      width: auto;
-    }
-    &__right {
-      width: auto;
-    }
+    &__nav { display: none; }
+    &__left { justify-content: start; width: auto; }
+    &__right { width: auto; }
   }
-  .burger {
-    display: flex;
+
+  .burger { display: flex; }
+
+  .footer {
+    font-size: 0.8rem; 
+  }
+
+  .layer-blur {
+  gap: 2rem;     
+}
+}
+
+/* ---------------- Phone (<= 480px) ---------------- */
+@media (max-width: 480px) {
+  .footer {
+    font-size: 0.7rem;
   }
 }
