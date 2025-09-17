@@ -13,14 +13,14 @@ body {
 
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  transform: none !important;  
+  transform: none !important;
 }
 
-input,   
-textarea, 
+input,
+textarea,
 button, 
-select { 
-  font-family: inherit;  
+select {
+  font-family: inherit;
 }
 
 @mixin transition($duration: 0.3s, $property: all, $timing: ease-out) {
@@ -32,7 +32,7 @@ select {
   justify-content: $justify;
   align-items: $align;
 }
-@mixin brad($radius: 1rem) { 
+@mixin brad($radius: 1rem) {
   border-radius: $radius;
 }
 @mixin bg($color: rgba(255, 255, 255, 0.2)) {
@@ -65,6 +65,7 @@ select {
   @include flex();
   gap: 1rem;
   &__btn {
+    @include transition;
     width: 100%;
     @include brad;
     background-color: rgba(255, 255, 255, 0.4);
@@ -94,7 +95,7 @@ select {
   &--active {
     display: block;
   }
-}
+} 
 
 .table {
   margin-top: 4rem;
@@ -106,31 +107,16 @@ select {
   &-wrapper {
     width: 100%;
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 80vh;
     -webkit-overflow-scrolling: touch;
-  }
-  &__row {
-    background: rgba(128, 128, 128, 0.5);
-    border-bottom: #ffffff solid 1px;
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-  & th:first-child,
-  & td:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    // background: none;
-    &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #808080; 
-    z-index: -1;
-  }
+    position: relative;
   }
 
   &__head th {
+    position: sticky; 
+    top: 0;
+    z-index: 30; 
     background: #1a4c80;
     height: clamp(4rem, 2vw, 6rem);
     font-size: clamp(0.6rem, 0.5vw + 0.75rem, 1rem);
@@ -138,23 +124,26 @@ select {
     vertical-align: middle;
     padding: clamp(10px, 2vw, 20px) clamp(5px, 2vw, 10px);
     white-space: normal;
-    word-break: break-word;
-    overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &__head th:first-child { 
+    left: 0; 
+    z-index: 50;
+  }
+
   &__body td {
+     background: rgba(128, 128, 128, 0.5);
     height: auto;
     padding: clamp(10px, 1vw, 20px) clamp(5px, 2vw, 10px);
     font-size: clamp(0.5rem, 0.5vw + 0.65rem, 0.9rem);
     white-space: normal;
-    word-break: break-word;
     text-align: center;
     vertical-align: middle;
-    overflow: hidden;
     text-overflow: ellipsis;
   }
   &__criteria {
-    width: 11.0625rem;
+    width: 11.0625rem; 
   }
   &__method {
     width: 12.3125rem;
@@ -176,8 +165,34 @@ select {
   }
   &__access {
     width: 8rem;
-  }
+  } 
+} 
+
+.table__row td,
+.table__row th {
+  border-bottom: 1px solid #fff;
+} 
+
+.table__row:last-child td,
+.table__row:last-child th {
+  border-bottom: none;
+} 
+ 
+.table__row td:first-child { 
+  position: sticky;  
+  border-bottom: 1px solid #fff; 
+   left: 0;
+    z-index: 20; 
 }
+
+.table__row td:first-child::before {
+  content: "";
+  position: absolute; 
+  inset: 0;
+  backdrop-filter: blur(6px);       
+  -webkit-backdrop-filter: blur(6px);
+  z-index: -1; 
+} 
 
 @media (max-width: 768px) {
   .table {

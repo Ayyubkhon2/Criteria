@@ -45,6 +45,7 @@ select {
   gap: 1rem;
 }
 .switcher__btn {
+  transition: all 0.3s ease-out;
   width: 100%;
   border-radius: 1rem;
   background-color: rgba(255, 255, 255, 0.4);
@@ -87,28 +88,15 @@ select {
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: 80vh;
   -webkit-overflow-scrolling: touch;
-}
-.table__row {
-  background: rgba(128, 128, 128, 0.5);
-  border-bottom: #ffffff solid 1px;
-}
-.table__row:last-child {
-  border-bottom: none;
-}
-.table th:first-child, .table td:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 2;
-}
-.table th:first-child::before, .table td:first-child::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #808080;
-  z-index: -1;
+  position: relative;
 }
 .table__head th {
+  position: sticky;
+  top: 0;
+  z-index: 30;
   background: #1a4c80;
   height: clamp(4rem, 2vw, 6rem);
   font-size: clamp(0.6rem, 0.5vw + 0.75rem, 1rem);
@@ -116,19 +104,20 @@ select {
   vertical-align: middle;
   padding: clamp(10px, 2vw, 20px) clamp(5px, 2vw, 10px);
   white-space: normal;
-  word-break: break-word;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
+.table__head th:first-child {
+  left: 0;
+  z-index: 50;
+}
 .table__body td {
+  background: rgba(128, 128, 128, 0.5);
   height: auto;
   padding: clamp(10px, 1vw, 20px) clamp(5px, 2vw, 10px);
   font-size: clamp(0.5rem, 0.5vw + 0.65rem, 0.9rem);
   white-space: normal;
-  word-break: break-word;
   text-align: center;
   vertical-align: middle;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 .table__criteria {
@@ -154,6 +143,32 @@ select {
 }
 .table__access {
   width: 8rem;
+}
+
+.table__row td,
+.table__row th {
+  border-bottom: 1px solid #fff;
+}
+
+.table__row:last-child td,
+.table__row:last-child th {
+  border-bottom: none;
+}
+
+.table__row td:first-child {
+  position: sticky;
+  border-bottom: 1px solid #fff;
+  left: 0;
+  z-index: 20;
+}
+
+.table__row td:first-child::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: -1;
 }
 
 @media (max-width: 768px) {

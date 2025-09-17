@@ -4,7 +4,7 @@ const navUnderline = document.querySelector(".header__nav-underline");
 
 function moveUnderline(item) {
   navUnderline.style.width = item.offsetWidth + "px";
-  navUnderline.style.left = item.offsetLeft + "px";
+  navUnderline.style.transform = `translateX(${item.offsetLeft}px)`;
 }
 
 const activeItem = document.querySelector(".header__nav-item--active");
@@ -20,7 +20,6 @@ navItems.forEach((item) => {
 
     item.classList.add("header__nav-item--active");
     moveUnderline(item);
-    // don't block navigation, <a> will follow link
   });
 });
 
