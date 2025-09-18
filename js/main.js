@@ -29,12 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const buttons = document.querySelectorAll(".switcher__btn");
   const variants = document.querySelectorAll(".variant");
 
+  // Hide inactive variants initially
   variants.forEach((v) => {
     if (!v.classList.contains("variant--active")) {
       v.style.display = "none";
     }
   });
 
+  // Handle clicks inside criteria.html
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       const targetId = button.dataset.variant;
@@ -54,7 +56,33 @@ document.addEventListener("DOMContentLoaded", () => {
       target.style.display = "block";
     });
   });
+
+  // ✅ NEW: Handle navigation from index.html (via #finance, #corporate, #investment)
+  const hash = window.location.hash.substring(1); // e.g. "finance"
+  if (hash) {
+    const target = document.getElementById(hash);
+    const button = document.querySelector(`[data-variant="${hash}"]`);
+
+    if (target) {
+      // Hide all
+      variants.forEach((v) => {
+        v.classList.remove("variant--active");
+        v.style.display = "none";
+      });
+
+      // Show correct one
+      target.classList.add("variant--active");
+      target.style.display = "block";
+
+      // Update active button if it exists
+      if (button) {
+        buttons.forEach((b) => b.classList.remove("switcher__btn--active"));
+        button.classList.add("switcher__btn--active");
+      }
+    }
+  }
 });
+
 
 /* Reveal animation */
 const reveals = document.querySelectorAll(".reveal");
@@ -170,3 +198,6 @@ burger.addEventListener("click", () => {
   burger.classList.toggle("active");
   dropdown.classList.toggle("active");
 });
+
+
+

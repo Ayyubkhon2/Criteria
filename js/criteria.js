@@ -10,7 +10,7 @@ document.querySelectorAll(".table-wrapper").forEach((wrapper) => {
   let lastX = 0;
   let lastTime = 0;
   let velocity = 0;
-
+ 
   function clampTarget(t) {
     return Math.max(0, Math.min(t, wrapper.scrollWidth - wrapper.clientWidth));
   }
@@ -939,3 +939,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+

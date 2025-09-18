@@ -176,7 +176,7 @@ select {
     font-size: clamp(1rem, 2vw, 1.5rem);
     margin-top: 1.25rem;
   }
-}
+} 
 
 // ==========================
 // Carousel
@@ -621,15 +621,15 @@ select {
 // ==========================
 // Rating Circles
 // ==========================
-.rating {
+.rating { 
   @include flex(row, center, center);
   text-align: center;
   border-radius: 50%;
   font-weight: bold;
-  flex: 0 0 clamp(2rem, 5vw, 2rem);
-  min-width: 0;
-  height: clamp(2rem, 5vw, 2rem);
-  font-size: clamp(0.7rem, 1.5vw, 1rem);
+    flex: 0 0 clamp(1rem, 5vw, 3rem);
+    min-width: 0;
+    height: clamp(1rem, 5vw, 3rem);
+    font-size: clamp(0.5rem, 1.5vw, 1rem);
 
   $ratings: (
     aaa: #009a44,

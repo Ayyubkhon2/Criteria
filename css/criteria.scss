@@ -9,7 +9,7 @@ body {
   min-height: 100vh;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
 
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -40,7 +40,7 @@ select {
 }
 @mixin hover-bg($color: rgba(234, 243, 255, 0.5)) {
   &:hover {
-    background: $color;
+    background: $color; 
   }
 }
 

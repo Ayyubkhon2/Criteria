@@ -2455,3 +2455,4 @@ function changeLang(lang) {
     startTypewriter();
   });
 }
+
