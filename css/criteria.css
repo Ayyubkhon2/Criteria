@@ -92,6 +92,8 @@ select {
   max-height: 80vh;
   -webkit-overflow-scrolling: touch;
   position: relative;
+  scrollbar-width: auto;
+  scrollbar-color: #00345c #f1f1f1;
 }
 .table__head th {
   position: sticky;
