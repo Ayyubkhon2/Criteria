@@ -77,7 +77,6 @@ select {
 }
 
 .table {
-  margin-top: 4rem;
   border-collapse: collapse;
   table-layout: fixed;
   min-width: 600px;
@@ -86,6 +85,7 @@ select {
   max-width: none;
 }
 .table-wrapper {
+  margin-top: 4rem;
   width: 100%;
   overflow-x: auto;
   overflow-y: auto;

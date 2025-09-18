@@ -98,13 +98,13 @@ select {
 } 
 
 .table {
-  margin-top: 4rem;
   border-collapse: collapse;
   table-layout: fixed;
   min-width: 600px;
   width: max-content;
-  max-width: none;
+  max-width: none;  
   &-wrapper {
+    margin-top: 4rem;
     width: 100%;
     overflow-x: auto;
     overflow-y: auto;
