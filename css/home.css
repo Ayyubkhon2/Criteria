@@ -114,6 +114,7 @@ a {
   font-weight: 800;
   white-space: normal;
   margin: 2rem auto;
+  padding: clamp(1rem, 2vw, 2rem);
 }
 .hero__text::after {
   content: "";
