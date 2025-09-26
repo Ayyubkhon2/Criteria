@@ -322,20 +322,20 @@ select {
   background: rgba(234, 243, 255, 0.5);
 }
 .top-emitter__name {
-  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-size: clamp(0.9rem, 2vw, 1.25rem);
 }
 .top-emitter__location {
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
   margin-top: clamp(0.25rem, 0.5vw, 0.625rem);
 }
 .top-emitter__status {
-  font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.6rem, 1.2vw, 0.9rem);
   margin-top: clamp(0.25rem, 0.5vw, 0.625rem);
 }
 .top-emitter__rating {
   position: absolute;
   top: clamp(0.8rem, 1vw, 1.5625rem);
-  right: clamp(1.5rem, 2vw, 3.4375rem);
+  right: clamp(0.8rem, 2vw, 3.4375rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -343,17 +343,17 @@ select {
   gap: clamp(0.25rem, 0.5vw, 0.625rem);
 }
 .top-emitter__circle {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: clamp(2rem, 5vw, 2.75rem);
+  height: clamp(2rem, 5vw, 2.75rem);
   border: clamp(2px, 0.3vw, 3px) solid currentColor;
   position: relative;
 }
 .top-emitter__grade {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
   font-weight: bold;
 }
 .top-emitter__score {
-  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
   position: relative;
 }
 .top-emitter__icon {
@@ -702,15 +702,11 @@ html {
   .carousel__card {
     min-height: clamp(12rem, 20vw, 14rem);
   }
-  .carousel__circle {
-    width: 3.5rem;
-    height: 3.5rem;
-  }
   .top-emitter__list {
     grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 30vw, 250px), 1fr));
   }
   .top-emitter__card {
-    max-width: 300px;
+    max-width: 200px;
   }
 }
 @media (max-width: 480px) {
@@ -729,7 +725,7 @@ html {
     padding: 0;
   }
   .carousel__card {
-    width: 70%;
+    width: 60%;
     min-height: 12rem;
   }
   .carousel__btn-box {
@@ -740,7 +736,7 @@ html {
     transform-origin: center;
   }
   .top-emitter__card {
-    width: 70%;
+    width: 50%;
   }
   .stats {
     flex-wrap: wrap;

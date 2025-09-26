@@ -9,7 +9,6 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* keep your overrides */
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   transform: none !important;
@@ -27,8 +26,6 @@ a {
   cursor: pointer;
 }
 
-/* ---------------- Mixins ---------------- */
-/* ---------------- Decorative Blobs ---------------- */
 .floating-blobs {
   position: fixed;
   inset: 0;
@@ -92,7 +89,6 @@ a {
     opacity: 0.6;
   }
 }
-/* ---------------- Hero ---------------- */
 .hero {
   margin-top: 4rem;
 }
@@ -135,7 +131,6 @@ a {
   }
 }
 
-/* ---------------- Chart ---------------- */
 .chart {
   max-width: 1200px;
   width: 100%;
@@ -147,8 +142,6 @@ a {
   justify-content: flex-start;
   align-items: stretch;
   gap: 0.625rem;
-  /* Tooltip */
-  /* Vertical lines */
 }
 .chart__header {
   display: flex;
@@ -165,7 +158,7 @@ a {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 20.375rem;
+  width: clamp(16rem, 10vw + 12rem, 20rem);
   height: 2.0625rem;
   padding: 0.625rem;
   gap: 1.25rem;
@@ -177,6 +170,9 @@ a {
 .chart__header-info:hover {
   background-color: rgba(255, 255, 255, 0.2);
   position: relative;
+}
+.chart__header-numbers {
+  white-space: nowrap;
 }
 .chart__header-btn {
   width: 11.5625rem;
@@ -314,26 +310,6 @@ a {
   flex: 1;
   min-height: 0;
 }
-.chart__tooltip {
-  height: 1.4375rem;
-  border: 0.0625rem solid var(--color-NAPP);
-  color: white;
-  font-size: 0.6875rem;
-  padding: 0.3125rem 0.625rem;
-  border-radius: 0.25rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease-out;
-  white-space: nowrap;
-  font-weight: 600;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-}
-.chart__tooltip.visible {
-  opacity: 1;
-  visibility: visible;
-}
 .chart__line-container {
   position: absolute;
   z-index: 0;
@@ -357,8 +333,27 @@ a {
   color: white;
   font-weight: 600;
 }
+.chart__tooltip {
+  height: 1.4375rem;
+  border: 0.0625rem solid var(--color-NAPP);
+  color: white;
+  font-size: 0.6875rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.25rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-out;
+  white-space: nowrap;
+  font-weight: 600;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+}
+.chart__tooltip.visible {
+  opacity: 1;
+  visibility: visible;
+}
 
-/* ---------------- Criteria ---------------- */
 .criteria {
   max-width: 1200px;
   width: 100%;
@@ -437,7 +432,6 @@ a {
   flex-shrink: 0;
 }
 
-/* ---------------- Rating ---------------- */
 .rating {
   margin-bottom: 4rem;
 }
@@ -461,12 +455,9 @@ a {
 }
 .rating-table__cell--header {
   white-space: normal;
-  word-wrap: break-word;
-  height: 2.5625rem;
   font-size: 1rem;
   font-weight: bold;
-  word-break: break-word;
-  padding: 1rem 0;
+  padding: 1rem 0.1rem;
 }
 .rating-table__body {
   height: 23.75rem;
@@ -524,7 +515,7 @@ a {
   align-items: center;
   flex: 1;
   min-width: 50px;
-  height: 2.5625rem;
+  height: auto;
 }
 .rating-table__category--small {
   flex: 1;
@@ -543,7 +534,7 @@ a {
 .rating-table__cell--group {
   flex: 3;
   min-width: 350px;
-  height: 2.5625rem;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -570,7 +561,7 @@ a {
 .rating-table__cell--score {
   flex: 1;
   min-width: 60px;
-  height: 2.5625rem;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -591,7 +582,7 @@ a {
 .rating-table__cell--level {
   flex: 2;
   min-width: 125px;
-  height: 2.5625rem;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -612,7 +603,7 @@ a {
 .rating-table__cell--points {
   flex: 1;
   min-width: 60px;
-  height: 2.5625rem;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -622,7 +613,6 @@ a {
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* ---------------- Responsive Breakpoints ---------------- */
 html {
   font-size: clamp(10px, 1vw + 0.5rem, 16px);
 }
@@ -640,7 +630,6 @@ html {
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* ---------------- Tablet (<= 768px) ---------------- */
 @media (max-width: 768px) {
   .criteria__group {
     grid-template-columns: 1fr;
@@ -650,8 +639,8 @@ html {
     width: clamp(11rem, 35vw, 14rem);
   }
   .rating-table__cell--header {
-    font-size: 0.8rem;
-    padding: 1rem 0.2rem;
+    font-size: 0.75rem;
+    white-space: normal;
   }
   .rating-table__row,
   .rating-table__row--header {
@@ -664,7 +653,6 @@ html {
     flex: 1;
     min-width: 40px;
     font-size: 0.7rem;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -691,7 +679,6 @@ html {
     flex: 1;
     min-width: 40px;
     font-size: 0.7rem;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -704,14 +691,7 @@ html {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .rating-table__cell--header {
-    font-size: 0.75rem;
-    padding: 0.25rem;
-    white-space: normal;
-    word-wrap: break-word;
-  }
 }
-/* ---------------- Phone (<= 480px) ---------------- */
 @media (max-width: 480px) {
   .criteria__group {
     grid-template-columns: 1fr;

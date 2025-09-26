@@ -14,14 +14,23 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
+
+
+
     <!-- Blobs -->
     <div class="floating-blobs" aria-hidden="true">
       <div class="blob blob--one"></div>
       <div class="blob blob--two"></div>
       <div class="blob blob--three"></div>
     </div>
+
+
+
+    <!-- Header -->
     <header class="header">
-      <div class="header__container"> 
+
+       <!-- Logo -->
+      <div class="header__container">
         <div class="header__left">
           <div class="header__logo">
             <img src="assets/logo-img.png" alt="" class="header__logo-img" />
@@ -31,7 +40,8 @@
               <p class="header__logo-description">OF PERSPECTIVE PROJECTS</p>
             </div>
           </div>
-
+          
+          <!-- Nav -->
           <nav class="header__nav">
             <ul class="header__nav-list">
               <li class="header__nav-item header__nav-item--active">
@@ -43,12 +53,12 @@
               <li class="header__nav-item">
                 <a href="criteria.html"><span data-i18n="nav3"></span></a>
               </li>
-
               <div class="header__nav-underline"></div>
             </ul>
           </nav>
         </div>
 
+         <!-- Language -->
         <div class="header__right">
           <div class="header__language language-dropdown">
             <button class="language-dropdown__btn">
@@ -56,32 +66,19 @@
             </button>
             <ul class="language-dropdown__menu">
               <li class="language-dropdown__option" data-lang="ru">
-                <img
-                  class="language-dropdown__flag"
-                  src="assets/ru.png"
-                  alt="RU"
-                />
-                Русский
+                <img class="language-dropdown__flag" src="assets/ru.png" alt="RU" />
+                 Русский
               </li>
               <li class="language-dropdown__option" data-lang="uz">
-                <img
-                  class="language-dropdown__flag"
-                  src="assets/uz.png"
-                  alt="UZ"
-                />
+                <img class="language-dropdown__flag" src="assets/uz.png" alt="UZ" />
                 Oʻzbekcha
               </li>
               <li class="language-dropdown__option" data-lang="en">
-                <img
-                  class="language-dropdown__flag"
-                  src="assets/en.png"
-                  alt="EN"
-                />
+                <img class="language-dropdown__flag" src="assets/en.png" alt="EN"/>
                 English
               </li>
             </ul>
           </div>
-
           <div class="header__login magnetic-button" data-i18n="login"></div>
 
           <!-- Burger -->
@@ -100,8 +97,13 @@
         </div>
       </div>
     </header>
+
+
+
+     <!-- Layer blur -->
     <div class="layer-blur">
-      <!-- Header -->
+
+
 
       <!-- Hero -->
       <section class="hero">
@@ -111,15 +113,17 @@
         </div>
       </section>
 
+
+
       <!-- Chart -->
       <div class="chart-container chart reveal reveal-left">
+
         <!-- Chart Header -->
         <div class="chart__header">
           <div class="chart__header-info">
             <div class="chart__header-desc" data-i18n="emitent"></div>
             <div class="chart__header-numbers" data-i18n="AO"></div>
           </div>
-
           <div class="chart__header-btn">
             <div class="chart__header-text" data-i18n="year"></div>
             <div class="chart__header-year-selector magnetic-button">2025</div>
@@ -128,28 +132,13 @@
 
         <!-- Quarter buttons -->
         <div class="chart__quarters">
-          <button
-            class="chart__quarter-btn chart__quarter-btn--active"
-            data-quarter="1"
-            data-i18n="q1"
-          ></button>
-          <button
-            class="chart__quarter-btn"
-            data-quarter="2"
-            data-i18n="q2"
-          ></button>
-          <button
-            class="chart__quarter-btn"
-            data-quarter="3"
-            data-i18n="q3"
-          ></button>
-          <button
-            class="chart__quarter-btn"
-            data-quarter="4"
-            data-i18n="q4"
-          ></button>
+          <button class="chart__quarter-btn chart__quarter-btn--active" data-quarter="1" data-i18n="q1"></button>
+          <button class="chart__quarter-btn" data-quarter="2" data-i18n="q2"></button>
+          <button class="chart__quarter-btn" data-quarter="3" data-i18n="q3"></button>
+          <button class="chart__quarter-btn" data-quarter="4" data-i18n="q4"></button>
         </div>
 
+         <!-- Chart Legend -->
         <div class="chart__content">
           <div class="chart__legend">
             <span class="chart__legend-label">A</span>
@@ -158,29 +147,26 @@
             <span class="chart__legend-label">D</span>
           </div>
 
+           <!-- Chart bars -->
           <div class="chart__bars">
-            <!-- Category A -->
             <div class="chart__bar-group" data-group="A">
               <div class="chart__bar"></div>
               <div class="chart__bar"></div>
               <div class="chart__bar"></div>
             </div>
-
-            <!-- Category B -->
+      
             <div class="chart__bar-group" data-group="B">
               <div class="chart__bar"></div>
               <div class="chart__bar"></div>
               <div class="chart__bar"></div>
             </div>
-
-            <!-- Category C -->
+        
             <div class="chart__bar-group" data-group="C">
               <div class="chart__bar"></div>
               <div class="chart__bar"></div>
               <div class="chart__bar"></div>
             </div>
-
-            <!-- Category D -->
+         
             <div class="chart__bar-group" data-group="D">
               <div class="chart__bar"></div>
             </div>
@@ -191,35 +177,29 @@
       <!-- Tooltip -->
       <div class="chart__tooltip" id="tooltip"></div>
 
-      <!-- Criteria Section -->
+
+
+      <!-- Criteria -->
       <section class="criteria">
         <p class="criteria__title" data-i18n="rating"></p>
         <div class="criteria__group">
+
           <a href="criteria.html#finance">
-            <div
-              class="criteria__item reveal reveal-bottom"
-              data-target="finance"
-            >
+            <div class="criteria__item reveal reveal-bottom" data-target="finance">
               <img class="criteria__icon" src="assets/home-finance.png" />
               <p class="criteria__text" data-i18n="finance"></p>
             </div>
           </a>
 
           <a href="criteria.html#corporate">
-            <div
-              class="criteria__item reveal reveal-bottom"
-              data-target="corporate"
-            >
+            <div class="criteria__item reveal reveal-bottom" data-target="corporate" >
               <img class="criteria__icon" src="assets/home-corporate.png" />
               <p class="criteria__text" data-i18n="corporate"></p>
             </div>
           </a>
 
           <a href="criteria.html#investment">
-            <div
-              class="criteria__item reveal reveal-bottom"
-              data-target="investment"
-            >
+            <div class="criteria__item reveal reveal-bottom" data-target="investment" >
               <img class="criteria__icon" src="assets/home-investment.png" />
               <p class="criteria__text" data-i18n="investment"></p>
             </div>
@@ -227,36 +207,29 @@
         </div>
       </section>
 
-      <!-- Rating Section -->
+
+
+      <!-- Rating -->
       <div class="rating-table reveal reveal-right">
+
+         <!-- Rating header -->
         <div class="rating-table__head">
           <div class="rating-table__row--header">
-            <div
-              class="rating-table__cell--header rating-table__cell--category"
-              data-i18n="category"
-            ></div>
+            <div class="rating-table__cell--header rating-table__cell--category" data-i18n="category"></div>
 
             <div class="rating-table__cell--group">
-              <div
-                class="rating-table__cell--header rating-table__cell--score"
-                data-i18n="score"
-              ></div>
-              <div
-                class="rating-table__cell--header rating-table__cell--level"
-                data-i18n="level"
-              ></div>
-              <div
-                class="rating-table__cell--header rating-table__cell--points"
-                data-i18n="points"
-              ></div>
+              <div class="rating-table__cell--header rating-table__cell--score" data-i18n="score"></div>
+              <div class="rating-table__cell--header rating-table__cell--level" data-i18n="level"></div>
+              <div class="rating-table__cell--header rating-table__cell--points" data-i18n="points"></div>
             </div>
           </div>
         </div>
 
+         <!-- Rating body -->
         <div class="rating-table__body">
+
           <div class="rating-table__row">
             <div class="rating-table__category" data-rating="AA">A</div>
-
             <div class="rating-table__main-group">
               <div class="rating-table__group">
                 <div class="rating-table__score" data-rating="AAA">AAA</div>
@@ -278,7 +251,6 @@
 
           <div class="rating-table__row">
             <div class="rating-table__category" data-rating="BB">B</div>
-
             <div class="rating-table__main-group">
               <div class="rating-table__group">
                 <div class="rating-table__score" data-rating="BBB">BBB</div>
@@ -300,7 +272,6 @@
 
           <div class="rating-table__row">
             <div class="rating-table__category" data-rating="CC">C</div>
-
             <div class="rating-table__main-group">
               <div class="rating-table__group">
                 <div class="rating-table__score" data-rating="CCC">CCC</div>
@@ -331,10 +302,14 @@
         </div>
       </div>
 
+
+
       <!-- Footer -->
       <footer class="footer">
         <p data-i18n="footer"></p>
       </footer>
+
+
     </div>
     <script src="https://unpkg.com/i18next@23.7.6/dist/umd/i18next.min.js"></script>
     <script src="js/main.js"></script>
