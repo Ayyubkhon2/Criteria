@@ -29,14 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const buttons = document.querySelectorAll(".switcher__btn");
   const variants = document.querySelectorAll(".variant");
 
-  // Hide inactive variants initially
   variants.forEach((v) => {
     if (!v.classList.contains("variant--active")) {
       v.style.display = "none";
     }
   });
 
-  // Handle clicks inside criteria.html
+  // Handle clicks criteria.html
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       const targetId = button.dataset.variant;
@@ -57,24 +56,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ✅ NEW: Handle navigation from index.html (via #finance, #corporate, #investment)
-  const hash = window.location.hash.substring(1); // e.g. "finance"
+  // Handle navigation ( #finance, #corporate, #investment)
+  const hash = window.location.hash.substring(1); 
   if (hash) {
     const target = document.getElementById(hash);
     const button = document.querySelector(`[data-variant="${hash}"]`);
 
     if (target) {
-      // Hide all
+   
       variants.forEach((v) => {
         v.classList.remove("variant--active");
         v.style.display = "none";
       });
-
-      // Show correct one
+    
       target.classList.add("variant--active");
       target.style.display = "block";
-
-      // Update active button if it exists
+      
       if (button) {
         buttons.forEach((b) => b.classList.remove("switcher__btn--active"));
         button.classList.add("switcher__btn--active");
@@ -84,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* Reveal animation */
+// Reveal animation 
 const reveals = document.querySelectorAll(".reveal");
 
 const observer = new IntersectionObserver(
@@ -101,7 +98,7 @@ const observer = new IntersectionObserver(
 
 reveals.forEach((el) => observer.observe(el));
 
-/* Magnetic button */
+// Magnetic button 
 const buttons = document.querySelectorAll(".magnetic-button");
 
 buttons.forEach((btn) => {
@@ -117,7 +114,7 @@ buttons.forEach((btn) => {
   });
 });
 
-/* Language dropdown */
+// Language dropdown 
 function changeLang(lang) {
   i18next.changeLanguage(lang, () => {
     updateContent(); 
@@ -190,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
       el.textContent = i18next.t(el.getAttribute("data-i18n"));
     });
   }
-/* Burger logic */
+// Burger logic 
 const burger = document.getElementById("burger");
 const dropdown = document.getElementById("dropdown");
 

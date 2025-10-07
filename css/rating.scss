@@ -14,7 +14,7 @@ body {
   display: flex;
   flex-direction: column;  
  
-  backdrop-filter: none !important; 
+  backdrop-filter: none !important;  
   -webkit-backdrop-filter: none !important;
   transform: none !important;  
 } 
@@ -400,10 +400,10 @@ select {
 
 // ==========================
 // Map
-// ==========================
+// ========================== 
 .map {
   &__container {
-    @include flex(row, center, center);
+    @include flex(row, center, center); 
   }
   &__title {
     @extend %section-title;
@@ -412,11 +412,6 @@ select {
     margin-top: clamp(2rem, 3vw, 4rem);
     max-width: 75rem;
     width: 100%;
-  }
-  &__province {
-    fill: rgba(255, 255, 255, 0.5);
-    stroke: rgba(255, 255, 255, 0.5);
-    stroke-width: 0.0938rem;
   }
   &__tooltip {
     max-width: clamp(8rem, 80vw, 14rem);
@@ -497,9 +492,10 @@ select {
     min-width: clamp(50px, 8vw, 100px);
     min-height: clamp(3rem, 2vw + 2.5rem, 4.875rem);
     @include flex(row, center, center);
+    @include hover-bg(rgba(255, 255, 255, 0.25));
    
   }
-  &__title th {
+  &__title th { 
     @extend %section-title;
     height: clamp(5rem, 2vw + 1rem, 7.625rem);
     font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
@@ -713,11 +709,6 @@ html {
   .carousel__card {
     min-height: clamp(12rem, 20vw, 14rem);
   }
-  // .carousel__circle {
-  //   width: 3.5rem;
-  //   height: 3.5rem;
-  // }
-
   .top-emitter__list {
     grid-template-columns: repeat(
       auto-fit,

@@ -1,4 +1,4 @@
-/* Ripple effect + click logic + swipe */
+// Ripple effect + click logic + swipe 
 document.addEventListener("DOMContentLoaded", () => {
   const chart = document.querySelector(".chart");
   const quarterBtns = Array.from(
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     activateQuarterIndex(0);
   }
 
-  // --- Click + Ripple handler ---
+  //  Click + Ripple handler
   quarterBtns.forEach((btn, idx) => {
     btn.addEventListener("click", (e) => {
       const rect = btn.getBoundingClientRect();
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // --- Swipe (touch + mouse drag) ---
+  // Swipe  
   let startX = null;
   let pointerDown = false;
 
@@ -2197,8 +2197,8 @@ function updateChart(year, quarter) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const defaultYear = String(currentYear);      // use the currentYear you defined above
-  const defaultQuarter = currentQuarter;       // use the currentQuarter you defined above
+  const defaultYear = String(currentYear);      
+  const defaultQuarter = currentQuarter;       
   updateChart(defaultYear, defaultQuarter);
 });
 

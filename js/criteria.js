@@ -18,11 +18,8 @@ document.querySelectorAll(".table-wrapper").forEach((wrapper) => {
   function startRAF() {
     if (rafId) return;
     function tick() {
-      // easing toward target
       current += (target - current) * 0.2;
       wrapper.scrollLeft = current;
-
-      // small friction on velocity so momentum dies out
       velocity *= 0.95;
 
       if (
@@ -48,11 +45,9 @@ document.querySelectorAll(".table-wrapper").forEach((wrapper) => {
     lastX = e.clientX;
     lastTime = performance.now();
     document.body.classList.add("no-select");
-    // start RAF in case it was stopped
     startRAF();
   });
 
-  // mousemove on document so dragging still works if pointer leaves wrapper
   document.addEventListener("mousemove", (e) => {
     if (!isDown) return;
     e.preventDefault();
@@ -61,7 +56,7 @@ document.querySelectorAll(".table-wrapper").forEach((wrapper) => {
 
     const now = performance.now();
     const dt = Math.max(1, now - lastTime);
-    velocity = (e.clientX - lastX) / dt; // px per ms
+    velocity = (e.clientX - lastX) / dt; 
     lastX = e.clientX;
     lastTime = now;
 
@@ -71,8 +66,7 @@ document.querySelectorAll(".table-wrapper").forEach((wrapper) => {
   document.addEventListener("mouseup", () => {
     if (!isDown) return;
     isDown = false;
-    // convert velocity to a pixel offset (~velocity * factor). Tweak factor for strength.
-    const momentum = velocity * 200; // adjust 200 to change inertia distance
+    const momentum = velocity * 200; 
     target = clampTarget(target - momentum);
     document.body.classList.remove("no-select");
     startRAF();
@@ -108,8 +102,7 @@ document.querySelectorAll(".table-wrapper").forEach((wrapper) => {
       velocity = (x - lastX) / dt;
       lastX = x;
       lastTime = now;
-
-      // prevent the browser horizontal swipe while dragging table
+      
       e.preventDefault();
       startRAF();
     },
@@ -911,17 +904,15 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       const key = el.dataset.i18n;
       if (!key) return;
-
-      // get translation and replace newlines with <br>
+      
       let translated =
         i18next.t(key, { interpolation: { escapeValue: false } }) || "";
       translated = translated.replace(/\n/g, "<br>");
 
-      // insert into element
       if (el.tagName !== "INPUT" && el.tagName !== "TEXTAREA") {
-        el.innerHTML = translated; // use innerHTML so <br> works
+        el.innerHTML = translated; 
       } else {
-        el.value = translated; // for input/textarea
+        el.value = translated;
       }
     });
   }

@@ -224,7 +224,7 @@ function measure() {
 
   if (isVertical) {
     cardHeight = r0.height + gap;
-    groupSize = 1; // slide one card at a time vertically
+    groupSize = 1; 
   } else {
     cardWidth = r0.width + gap;
     if (window.innerWidth >= 1200) groupSize = 3;

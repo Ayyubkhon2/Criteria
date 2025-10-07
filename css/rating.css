@@ -385,11 +385,6 @@ select {
   max-width: 75rem;
   width: 100%;
 }
-.map__province {
-  fill: rgba(255, 255, 255, 0.5);
-  stroke: rgba(255, 255, 255, 0.5);
-  stroke-width: 0.0938rem;
-}
 .map__tooltip {
   max-width: clamp(8rem, 80vw, 14rem);
   width: auto;
@@ -471,6 +466,9 @@ select {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.categories__amount:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 .categories__title th {
   height: clamp(5rem, 2vw + 1rem, 7.625rem);
