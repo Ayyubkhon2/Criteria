@@ -89,7 +89,7 @@ select {
   width: 100%;
   overflow-x: auto;
   overflow-y: auto;
-  max-height: 80vh;
+  max-height: 100vh;
   -webkit-overflow-scrolling: touch;
   position: relative;
   scrollbar-width: auto;
