@@ -1,6 +1,5 @@
-// ========================
-// Ripple effect + click logic + swipe
-// ========================
+// ---------------  Ripple & Click & Swipe ---------------
+
 document.addEventListener("DOMContentLoaded", () => {
     const chart = document.querySelector(".chart");
     const quarterBtns = Array.from(document.querySelectorAll(".chart__quarter-btn"));
@@ -39,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
         activateQuarterIndex(0);
     }
 
-    // Ripple + click
     quarterBtns.forEach((btn, idx) => {
         btn.addEventListener("click", (e) => {
             const rect = btn.getBoundingClientRect();
@@ -62,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Swipe
     let startX = null;
     let pointerDown = false;
 
@@ -93,9 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
     chart.addEventListener("dragstart", (e) => e.preventDefault());
 });
 
-// ========================
-// Parallax effect
-// ========================
+
+// ---------------  Parallax effect ---------------
+
 (function() {
     const body = document.body;
     let lastScroll = 0;
@@ -118,9 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!prefersReduced) window.addEventListener("scroll", onScroll, { passive: true });
 })();
 
-// ========================
-// Typewriter
-// ========================
+
+// ---------------  Typewriter ---------------
+
 let typewriterTimer;
 
 function startTypewriter() {
@@ -151,9 +148,9 @@ function startTypewriter() {
     type();
 }
 
-// ========================
-// Chart grid lines
-// ========================
+
+// ---------------  Chart grid lines ---------------
+
 const barsContainer = document.querySelector(".chart__bars");
 
 function renderChartLines() {
@@ -197,9 +194,9 @@ renderChartLines();
 window.addEventListener("resize", renderChartLines);
 
 
-// ========================
-// Mock data 
-// ========================
+
+// ---------------  Chart Data Generation ---------------
+
 const chartData = {
     2025: {
         headerNumbers: { AO: 691, OOO: 37 },
@@ -2021,9 +2018,9 @@ const chartData = {
     },
 };
 
-// ========================
-// Chart logic
-// ========================
+
+// ---------------  Chart Logic ---------------
+
 let currentYear = 2025;
 let currentQuarter = 1;
 const chartBars = document.querySelectorAll(".chart__bar");
@@ -2069,9 +2066,6 @@ function updateChart(year, quarter) {
     });
 }
 
-// ========================
-// Chart init and resizing
-// ========================
 document.addEventListener("DOMContentLoaded", () => {
     const defaultYear = String(currentYear);
     const defaultQuarter = currentQuarter;
@@ -2103,9 +2097,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("orientationchange", scheduleChartUpdate);
 });
 
-// ========================
-// Tooltip
-// ========================
+
+// ---------------  Tooltip ---------------
+
 chartBars.forEach((bar) => {
     bar.addEventListener("mouseenter", () => {
         chartTooltip.innerText = bar.dataset.tooltip;
@@ -2119,9 +2113,9 @@ chartBars.forEach((bar) => {
     bar.addEventListener("mouseleave", () => chartTooltip.classList.remove("visible"));
 });
 
-// ========================
-// Year selector dropdown (fixed position)
-// ========================
+
+// ---------------  Year Selector Dropdown ---------------
+
 const yearDropdown = document.createElement("ul");
 yearDropdown.classList.add("chart__year-dropdown");
 const parent = yearSelector.parentElement;
@@ -2172,18 +2166,16 @@ window.addEventListener("resize", () => {
     if (yearDropdown.style.display === "block") positionYearDropdown();
 });
 
-// ========================
-// Rating color assignment
-// ========================
+// ---------------  Rating coloring ---------------
+
 document.querySelectorAll(".rating-table__score, .rating-table__category, .rating-table__category--small")
     .forEach((el) => {
         const rating = el.dataset.rating && el.dataset.rating.toLowerCase();
         if (rating) el.style.color = `var(--color-${rating})`;
     });
 
-// ========================
-// Translation
-// ========================
+// ---------------  Translation ---------------
+
 i18next.init({
         lng: savedLang,
         debug: true,
@@ -2347,9 +2339,7 @@ function changeLang(lang) {
 
 
 
-// ========================
-// Mobile scroll / touch animation controller
-// ========================
+// ---------------  Mobile Scroll ---------------
 (() => {
     let ticking = false;
     let scrollTimeout;

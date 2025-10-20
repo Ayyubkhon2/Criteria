@@ -26,7 +26,9 @@ a {
     cursor: pointer;
 }
 
-// Mixins
+/* =====================================
+   MIXINS
+===================================== */
 @mixin transition($duration: 0.3s,
 $property: all,
 $timing: ease-out) {
@@ -58,7 +60,9 @@ $flex: 1) {
     height: $height;
 }
 
-// Blobs
+/* =====================================
+   BLOBS
+===================================== */
 .floating-blobs {
     position: fixed;
     inset: 0;
@@ -123,7 +127,9 @@ $flex: 1) {
     }
 }
 
-// Hero
+/* =====================================
+   HERO
+===================================== */
 .hero {
     margin-top: 4rem;
     &__text {
@@ -165,7 +171,9 @@ $flex: 1) {
     }
 }
 
-// Chart
+/* =====================================
+   CHART
+===================================== */
 .chart {
     max-width: 1200px;
     width: 100%;
@@ -348,7 +356,6 @@ $flex: 1) {
         color: white;
         font-weight: 600;
     }
-    // Tooltip
     &__tooltip {
         height: 1.4375rem;
         border: 0.0625rem solid var(--color-NAPP);
@@ -371,7 +378,9 @@ $flex: 1) {
     }
 }
 
-// Criteria
+/* =====================================
+   CRITERIA
+===================================== */
 .criteria {
     max-width: 1200px;
     width: 100%;
@@ -425,7 +434,7 @@ $flex: 1) {
         @include transition;
     }
     &__item.reveal:nth-child(2) {
-        @include transition(0.5s);
+        @include transition(0.5s); 
     }
     &__item.reveal:nth-child(3) {
         @include transition(0.7s);
@@ -443,7 +452,9 @@ $flex: 1) {
     }
 }
 
-// Rating
+/* =====================================
+   RATING
+===================================== */
 .rating {
     margin-bottom: 4rem;
     &-table {
@@ -599,7 +610,9 @@ $flex: 1) {
     }
 }
 
-// Breakpoints
+// =====================================
+// RESPONSIVE BREAKPOINTS
+// ===================================== 
 html {
     font-size: clamp(10px, 1vw + 0.5rem, 16px);
 }
@@ -617,7 +630,9 @@ html {
     grid-template-columns: repeat(3, 1fr);
 }
 
-// Tablet (768px)
+// ==========================
+// Tablet (<=768px)
+// ==========================
 @media (max-width: 768px) {
     .criteria__group {
         grid-template-columns: 1fr;
@@ -681,7 +696,9 @@ html {
     }
 }
 
-// Phone (480px)
+// ==========================
+// Phone (<=480px)
+// ==========================
 @media (max-width: 480px) {
     .criteria__group {
         grid-template-columns: 1fr;

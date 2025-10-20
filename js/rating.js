@@ -1,4 +1,5 @@
-// --------------- Cards generation ---------------
+// ---------------  Cards Generation  ---------------
+
 const carouselData = [{
         org: "ABC Invest",
         region: "andijan",
@@ -165,14 +166,14 @@ function renderTopEmitters() {
     containerBest.innerHTML = "";
     containerWorst.innerHTML = "";
 
-    // Best emitters
+    // ---------------  Best emitters ---------------
     best.forEach((item) => {
         const card = template.content.cloneNode(true);
         populateCard(card, item, "top-emitter");
         containerBest.appendChild(card);
     });
 
-    // Worst emitters
+    // ---------------  Worst emitters ---------------
     worst.forEach((item) => {
         const card = template.content.cloneNode(true);
         populateCard(card, item, "top-emitter");
@@ -189,7 +190,7 @@ function updateTopEmitters() {
     });
 }
 
-// Slider logic
+// ---------------  Slider Logic ---------------
 
 let isVertical = false;
 
@@ -218,7 +219,6 @@ function initSlider() {
     let current = 0;
     let target = 0;
 
-    // ---- Measure function ----
     function measure() {
         const cards = Array.from(track.querySelectorAll(".carousel__card"));
         if (!cards.length) return 0;
@@ -239,7 +239,6 @@ function initSlider() {
         return cards.length;
     }
 
-    // ---- Apply transform ----
     function applyTransform() {
         const offset = index * (isVertical ? cardHeight : cardWidth) * groupSize;
         track.style.transform = isVertical ?
@@ -248,8 +247,7 @@ function initSlider() {
         current = offset;
         target = offset;
     }
-
-    // ---- Slide functions ----
+    
     function goRight() {
         const cardsLength = measure();
         const maxIndex = Math.ceil(cardsLength / groupSize) - 1;
@@ -268,7 +266,6 @@ function initSlider() {
 
     track.style.transition = "transform 600ms ease-out";
 
-    // ---- Autoplay ----
     function resetAutoplay() {
         clearTimeout(autoplayTimer);
         autoplayTimer = setTimeout(goRight, 10000);
@@ -283,7 +280,6 @@ function initSlider() {
         resetAutoplay();
     });
 
-    // ---- PC Horizontal Scroll ----
     track.addEventListener(
         "wheel",
         (e) => {
@@ -311,8 +307,7 @@ function initSlider() {
             }, 400);
         }, { passive: false }
     );
-
-    // ---- Mobile Touch Scroll ----
+  
     function startRAF() {
         if (rafId) return;
 
@@ -352,14 +347,14 @@ function initSlider() {
     track.addEventListener("touchmove", (e) => {
         if (!isTouching) return;
         const y = e.touches[0].clientY;
-        const dy = lastY - y; // delta since last move
+        const dy = lastY - y;
         lastY = y;
 
-        target += dy; // accumulate movement
+        target += dy;
 
         const now = performance.now();
         const dt = Math.max(1, now - lastTime);
-        velocity = dy / dt; // pixels per ms
+        velocity = dy / dt;
         lastTime = now;
 
         const cardsLength = measure();
@@ -375,7 +370,7 @@ function initSlider() {
         if (!isTouching) return;
         isTouching = false;
 
-        target += velocity * 100; // apply momentum
+        target += velocity * 100;
 
         const cardsLength = measure();
         const maxOffset = Math.max((cardsLength - groupSize) * cardHeight, 0);
@@ -386,19 +381,16 @@ function initSlider() {
         resetAutoplay();
     }, { passive: true });
 
-
-    // ---- Mouse hover pause ----
     track.addEventListener("mouseenter", () => {
         clearTimeout(autoplayTimer);
     });
     track.addEventListener("mouseleave", resetAutoplay);
 
-    // ---- Initial setup ----
+
     measure();
     applyTransform();
     resetAutoplay();
 
-    // ---- Resize ----
     window.addEventListener("resize", () => {
         const cardsLength = measure();
         const maxIndex = Math.ceil(cardsLength / groupSize) - 1;
@@ -407,11 +399,11 @@ function initSlider() {
     });
 }
 
-// --------------- Temperature map ---------------
+// ---------------  Temperature Map ---------------
+
 document.addEventListener("DOMContentLoaded", () => {
     const provinces = document.querySelectorAll(".map__province");
 
-    // Tooltip
     const tooltip = document.createElement("div");
     tooltip.className = "map__tooltip";
     document.body.appendChild(tooltip);
@@ -436,7 +428,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         province.style.fill = baseColor;
 
-        // Hover
         province.addEventListener("mouseenter", () => {
             const translatedName = regionKey ?
                 i18next.t(`regions.${regionKey}`) :
@@ -473,7 +464,6 @@ document.addEventListener("DOMContentLoaded", () => {
             tooltip.style.display = "none";
         });
 
-        // Click (lock selection)
         province.addEventListener("click", () => {
             provinces.forEach((p) => {
                 p.classList.remove("active");
@@ -485,7 +475,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Helper for RGB colors
     function shadeColor(color, percent) {
         let R = parseInt(color.substring(1, 3), 16);
         let G = parseInt(color.substring(3, 5), 16);
@@ -510,10 +499,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// --------------- Counter ---------------
+// ---------------  Counter ---------------
 function startCounters(container) {
     const counters = container.querySelectorAll(".stats__stat-value");
-    const duration = 2000; // duration in ms, lower = faster
+    const duration = 2000;
 
     counters.forEach((counter) => {
         const target = +counter.getAttribute("data-target");
@@ -551,7 +540,7 @@ document.querySelectorAll(".switcher__btn").forEach((btn) => {
     });
 });
 
-// Progress bar and label
+// ---------------  Progress bar ---------------
 document.querySelectorAll("tr").forEach((row) => {
     const ratingCell = row.querySelector(".categories__rating");
     const progressValue = row.querySelector(".categories__progress-value");
@@ -577,7 +566,6 @@ document.querySelectorAll("tr").forEach((row) => {
     }
 });
 
-// Progress bar animation
 const progressObserver = new IntersectionObserver(
     (entries, observer) => {
         entries.forEach((entry) => {
@@ -601,7 +589,6 @@ document.querySelectorAll(".categories__progress-bar").forEach((bar) => {
     progressObserver.observe(bar);
 });
 
-//Emitter circle color
 document
     .querySelectorAll(".top-emitter__card, .carousel__card")
     .forEach((card) => {
@@ -627,7 +614,7 @@ document
         }
     });
 
-// --------------- Table generation ---------------
+// ---------------  Table generation ---------------
 const data = [{
         org: "ABC Invest",
         region: "andijan",
@@ -722,7 +709,7 @@ function updateStaticTexts() {
   });
 }
 
-// --------------- Translation ---------------
+// ---------------  Translation ---------------
 i18next.init(
   {
     lng: savedLang,

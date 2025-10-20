@@ -6,7 +6,7 @@ body {
     color: #ffffff;
     width: 100%;
     min-height: 100vh;
-    height: 100%;
+    height: 100%; 
     display: flex;
     flex-direction: column;
     backdrop-filter: none !important;
@@ -21,6 +21,9 @@ select {
     font-family: inherit;
 }
 
+/* =====================================
+   MIXINS
+===================================== */
 @mixin transition($duration: 0.3s,
 $property: all,
 $timing: ease-out) {
@@ -50,6 +53,9 @@ $align: stretch) {
     }
 }
 
+/* =====================================
+   CONTAINER & SWITCHER
+===================================== */
 .container {
     width: clamp(320px, 90%, 1200px);
     margin-inline: auto;
@@ -95,9 +101,6 @@ $align: stretch) {
     }
 }
 
-// ==========================
-// Variant
-// ==========================
 .variant {
     display: none;
     &--active {
@@ -105,6 +108,10 @@ $align: stretch) {
     }
 }
 
+
+/* =====================================
+   TABLE
+===================================== */
 .table {
     border-collapse: collapse;
     table-layout: fixed;
@@ -201,6 +208,14 @@ $align: stretch) {
     z-index: -1;
 }
 
+// =====================================
+// RESPONSIVE BREAKPOINTS
+// ===================================== 
+
+
+// ==========================
+// Tablet (<=768px)
+// ==========================
 @media (max-width: 768px) {
     .table {
         min-width: 500px;
